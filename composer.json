@@ -1,0 +1,20 @@
+{
+    "name": "will202/grumphp",
+    "description": "Play around with Grumphp",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thom Williams",
+            "email": "thom.williams@pnnl.gov"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpro/grumphp": "^0.12.1"
+    },
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}
