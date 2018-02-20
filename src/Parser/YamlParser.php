@@ -8,12 +8,9 @@
 
 namespace Pnnl\PrettyJSONYAML\Parser;
 
-use Pnnl\PrettyJSONYAML\Exception\OrderException;
-use Pnnl\PrettyJSONYAML\Linter\LintError;
-use Pnnl\PrettyJSONYAML\Linter\Yaml\YamlPrettyLintError;
 use ReflectionClass;
-use Seld\JsonLint\ParsingException;
-use Symfony\Component\Yaml\Exception\ParseException;
+use ReflectionException;
+use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 
@@ -84,9 +81,9 @@ class YamlParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parseFile($fileName)
+    public function parseFile(SplFileInfo $file)
     {
-        return Yaml::parseFile($fileName);
+        return Yaml::parseFile($file->getPathname());
     }
 
     /**
@@ -100,10 +97,10 @@ class YamlParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function dumpFile(array $data, $filename)
+    public function dumpFile(array $data, SplFileInfo $file)
     {
         $yaml = $this->dump($data);
-        file_put_contents($filename, $yaml);
+        file_put_contents($file->getPathname(), $yaml);
     }
 
     /**
@@ -121,8 +118,9 @@ class YamlParser implements ParserInterface
      * @link http://symfony.com/blog/new-in-symfony-3-1-customizable-yaml-parsing-and-dumping
      *
      * @return bool
+     * @throws ReflectionException
      */
-    private function supportsFlags()
+    public static function supportsFlags()
     {
         $rc = new ReflectionClass(Yaml::class);
         $method = $rc->getMethod('parse');
@@ -130,4 +128,40 @@ class YamlParser implements ParserInterface
 
         return $params[1]->getName() === 'flags';
     }
+
+    /**
+     * @param boolean $objectSupport
+     */
+    public function setObjectSupport($objectSupport)
+    {
+        $this->objectSupport = $objectSupport;
+    }
+
+    /**
+     * @param boolean $exceptionOnInvalidType
+     */
+    public function setExceptionOnInvalidType($exceptionOnInvalidType)
+    {
+        $this->exceptionOnInvalidType = $exceptionOnInvalidType;
+    }
+
+    /**
+     * @param bool $parseCustomTags
+     */
+    public function setParseCustomTags($parseCustomTags)
+    {
+        // Yaml::PARSE_CONSTANT is only available in Symfony Yaml >= 3.2
+        $this->parseCustomTags = $parseCustomTags && defined('Symfony\Component\Yaml\Yaml::PARSE_CONSTANT');
+    }
+
+    /**
+     * @param bool $parseConstants
+     */
+    public function setParseConstants($parseConstants)
+    {
+        // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
+        $this->parseConstants = $parseConstants && defined('Symfony\Component\Yaml\Yaml::PARSE_CUSTOM_TAGS');
+    }
+
+
 }

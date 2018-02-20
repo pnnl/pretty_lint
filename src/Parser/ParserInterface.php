@@ -9,9 +9,8 @@
 namespace Pnnl\PrettyJSONYAML\Parser;
 
 
-use Pnnl\PrettyJSONYAML\Exception\OrderException;
-use Pnnl\PrettyJSONYAML\Linter\PrettyLintErrorInterface;
 use Seld\JsonLint\ParsingException;
+use SplFileInfo;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 interface ParserInterface
@@ -39,14 +38,14 @@ interface ParserInterface
     /**
      * Parse the contents of a file into data
      *
-     * @param string $fileName
+     * @param SplFileInfo $file
      *
      * @return array
      *
      * @throws ParseException
      * @throws ParsingException
      */
-    public function parseFile($fileName);
+    public function parseFile(SplFileInfo $file);
 
     /**
      * Dump data into a pretty formatted string
@@ -61,9 +60,9 @@ interface ParserInterface
      * Dump data into a pretty formatted string and save to file
      *
      * @param array  $data
-     * @param string $filename
+     * @param SplFileInfo $file
      */
-    public function dumpFile(array $data, $filename);
+    public function dumpFile(array $data, SplFileInfo $file);
 
     /**
      * Set the number of spaces to indent
