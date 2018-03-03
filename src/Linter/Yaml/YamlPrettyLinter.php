@@ -10,16 +10,11 @@ namespace Pnnl\PrettyJSONYAML\Linter\Yaml;
 
 
 use GrumPHP\Collection\LintErrorsCollection;
-use GrumPHP\Linter\Yaml\YamlLintError;
-use GrumPHP\Util\Filesystem;
-use Pnnl\PrettyJSONYAML\Exception\OrderException;
+use Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter;
 use Pnnl\PrettyJSONYAML\Linter\LinterInterface;
-use Pnnl\PrettyJSONYAML\Parser\ParserInterface;
 use Pnnl\PrettyJSONYAML\Parser\YamlParser;
 use ReflectionException;
-use Seld\JsonLint\ParsingException;
 use SplFileInfo;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -27,29 +22,13 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package Pnnl\PrettyJSONYAML\Linter\Yaml
  */
-class YamlPrettyLinter implements LinterInterface
+class YamlPrettyLinter extends AbstractPrettyLinter
 {
 
     /**
-     * @var Filesystem
+     * @var YamlParser
      */
-    private $filesystem;
-
-    /**
-     * @var ParserInterface
-     */
-    private $parser;
-
-    /**
-     * YamlLinter constructor.
-     *
-     * @param Filesystem $filesystem
-     */
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-        $this->parser = new YamlParser();
-    }
+    protected $parser;
 
     /**
      * @param SplFileInfo $file
@@ -58,16 +37,11 @@ class YamlPrettyLinter implements LinterInterface
      */
     public function lint(SplFileInfo $file)
     {
-        $errors = new LintErrorsCollection();
-
-        try {
-            $this->parser->parseFile($file);
-        } catch (ParseException $exception) {
-            $exception->setParsedFile($file->getPathname());
-            $errors[] = YamlLintError::fromParseException($exception);
-        }
-
-        return $errors;
+        // $errors = new LintErrorsCollection();
+        //
+        //
+        // return $errors;
+        return parent::lint($file);
     }
 
 
@@ -125,31 +99,6 @@ class YamlPrettyLinter implements LinterInterface
     {
         // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
         $this->parser->setParseConstants($parseConstants);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function errorFromOrderException(OrderException $e)
-    {
-        return YamlPrettyLintError::fromOrderException($e);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function errorFromParseException(ParseException $e)
-    {
-        return YamlPrettyLintError::fromParseException($e);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
-    public static function errorFromParsingException(ParsingException $e)
-    {
-        throw new \Exception("Undefined method errorFromParsingException. JSON related error with YAML Linter.");
     }
 }
 

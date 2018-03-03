@@ -9,6 +9,9 @@
 namespace Pnnl\PrettyJSONYAML\Linter;
 
 use GrumPHP\Collection\LintErrorsCollection;
+use GrumPHP\Linter\Json\JsonLintError;
+use GrumPHP\Linter\LinterInterface;
+use GrumPHP\Linter\Yaml\YamlLintError;
 use GrumPHP\Util\Filesystem;
 use Pnnl\PrettyJSONYAML\Exception\OrderException;
 use Pnnl\PrettyJSONYAML\Parser\ParserInterface;
@@ -20,13 +23,6 @@ abstract class AbstractPrettyLinter implements LinterInterface
 {
 
     /**
-     * How to interact with files
-     *
-     * @var Filesystem $filesystem
-     */
-    protected $filesystem;
-
-    /**
      * Parser to convert the string content into a structured array
      *
      * @var ParserInterface $parser
@@ -34,11 +30,18 @@ abstract class AbstractPrettyLinter implements LinterInterface
     protected $parser;
 
     /**
+     * Interact with the files
+     *
+     * @var \GrumPHP\Util\Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * The string content of the data file to be parsed
      *
      * @var string $content
      */
-    private $content;
+    protected $content;
 
     /**
      * The data array to be sorted
@@ -73,19 +76,25 @@ abstract class AbstractPrettyLinter implements LinterInterface
      *
      * @var array $topKeys
      */
-    protected $topKeys;
+    protected $topKeys = [];
 
     /**
      * AbstractPrettyLinter constructor.
      *
-     * @param Filesystem $filesystem
+     * @param ParserInterface $parser
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(ParserInterface $parser, Filesystem $filesystem)
     {
+        $this->parser = $parser;
         $this->filesystem = $filesystem;
     }
 
 
+    /**
+     * @param SplFileInfo $file
+     *
+     * @return LintErrorsCollection
+     */
     public function lint(SplFileInfo $file)
     {
         $errors = new LintErrorsCollection();
@@ -104,7 +113,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
                  * Split both into lines
                  * Compare each line to get line number that is different
                  */
-                throw new OrderException("File is not sorted properly", -1, null, $file->getFilename());
+                throw new OrderException("File is not sorted properly", -1,
+                  null, $file->getFilename());
             }
 
             // TODO: Ensure sorted file is consistent with .editorconfig file
@@ -119,18 +129,19 @@ abstract class AbstractPrettyLinter implements LinterInterface
              * Maybe should just be settings in grumphp config
              */
         } catch (OrderException $e) {
-            $e->setParsedFile($file->getPathname());
-            $errors[] = self::errorFromOrderException($e);
+            $errors[] = PrettyLintError::fromOrderException($e);
         } catch (ParseException $e) {
             $e->setParsedFile($file->getPathname());
-            $errors[] = self::errorFromParseException($e);
+            $errors[] = YamlLintError::fromParseException($e);
         } catch (ParsingException $e) {
-            $errors[] = self::errorFromParsingException($e);
+            $errors[] = JsonLintError::fromParsingException($file, $e);
         }
+        return $errors;
     }
 
     /**
      * Sorts the passed array
+     *
      * @param array $data
      *
      * @return void
