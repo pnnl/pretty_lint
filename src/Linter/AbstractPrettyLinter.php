@@ -21,8 +21,8 @@ use Symfony\Component\Yaml\Exception\ParseException;
 abstract class AbstractPrettyLinter implements LinterInterface
 {
 
-    /** @var ParserInterface $parser - Parser to convert the string content into a structured array */
-    protected $parser;
+    /** @var bool */
+    protected $autoFix = true;
 
     /** @var string $content - The string content of the data file to be parsed */
     protected $content;
@@ -30,14 +30,17 @@ abstract class AbstractPrettyLinter implements LinterInterface
     /** @var array $data - The data array to be sorted */
     protected $data;
 
-    /** @var string $sorted - The sorted prettified data object */
-    protected $sorted;
-
     /** @var int $indent - Number of spaces to use for the indent */
     protected $indent;
 
+    /** @var ParserInterface $parser - Parser to convert the string content into a structured array */
+    protected $parser;
+
     /** @var bool $sort - Whether or not to sort the keys alphabetically */
     protected $sort = true;
+
+    /** @var string $sorted - The sorted prettified data object */
+    protected $sorted;
 
     /** @var array $topKeys - A sorted list of keys to keep at the top of the alphabetical list */
     protected $topKeys = [];
@@ -51,7 +54,6 @@ abstract class AbstractPrettyLinter implements LinterInterface
     {
         $this->parser = $parser;
     }
-
 
     /**
      * @param SplFileInfo $file
@@ -103,6 +105,14 @@ abstract class AbstractPrettyLinter implements LinterInterface
             $errors[] = JsonLintError::fromParsingException($file, $e);
         }
         return $errors;
+    }
+
+    /**
+     * @param bool $autoFix
+     */
+    public function setAutoFix($autoFix)
+    {
+        $this->autoFix = $autoFix;
     }
 
     /**

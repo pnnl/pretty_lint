@@ -65,11 +65,12 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     }
 
     /**
-     * @param boolean $exceptionOnInvalidType
+     * @param bool $parseConstants
      */
-    public function setExceptionOnInvalidType($exceptionOnInvalidType)
+    public function setParseConstants($parseConstants)
     {
-        $this->parser->setExceptionOnInvalidType($exceptionOnInvalidType);
+        // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
+        $this->parser->setParseConstants($parseConstants);
     }
 
     /**
@@ -82,12 +83,11 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     }
 
     /**
-     * @param bool $parseConstants
+     * @param boolean $exceptionOnInvalidType
      */
-    public function setParseConstants($parseConstants)
+    public function setExceptionOnInvalidType($exceptionOnInvalidType)
     {
-        // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
-        $this->parser->setParseConstants($parseConstants);
+        $this->parser->setExceptionOnInvalidType($exceptionOnInvalidType);
     }
 }
 

@@ -35,8 +35,12 @@ class PrettyYaml extends YamlLint
     public function getConfigurableOptions()
     {
         $options = parent::getConfigurableOptions();
-        $options->setDefaults(['indent' => 2]);
+        $options->setDefaults([
+          'auto_fix' => true,
+          'indent' => 2,
+        ]);
 
+        $options->addAllowedTypes('auto_fix', ['bool']);
         $options->addAllowedTypes('indent', ['int']);
 
         return $options;
@@ -53,11 +57,12 @@ class PrettyYaml extends YamlLint
         }
 
         $config = $this->getConfiguration();
-        $this->linter->setObjectSupport($config['object_support']);
-        $this->linter->setExceptionOnInvalidType($config['exception_on_invalid_type']);
-        $this->linter->setParseCustomTags($config['parse_custom_tags']);
-        $this->linter->setParseConstants($config['parse_constant']);
+        $this->linter->setAutoFix($config['auto_fix']);
         $this->linter->setIndent($config['indent']);
+        $this->linter->setObjectSupport($config['object_support']);
+        $this->linter->setParseConstants($config['parse_constant']);
+        $this->linter->setParseCustomTags($config['parse_custom_tags']);
+        $this->linter->setExceptionOnInvalidType($config['exception_on_invalid_type']);
 
         try {
             $lintErrors = $this->lint($files);
