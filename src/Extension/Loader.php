@@ -27,12 +27,12 @@ class Loader implements ExtensionInterface
     {
         // Create appropriate dependency injection
         // Create the YAML parser
-        $container->register("parser.yamlparser", YamlParser::class);
+        $container->register("parser.yamlparser", YamlParser::class)
+            ->addArgument($container->get('grumphp.util.filesystem'));
 
         // Create the YAML Linter
         $container->register("linter.yamlprettylinter", YamlPrettyLinter::class)
-          ->addArgument($container->get("parser.yamlParser"))
-          ->addArgument($container->get('grumphp.util.filesystem'));
+          ->addArgument($container->get("parser.yamlParser"));
 
         // Create the YAML task
         $container->register('task.prettyyaml', PrettyYaml::class)

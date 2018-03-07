@@ -12,7 +12,6 @@ use GrumPHP\Collection\LintErrorsCollection;
 use GrumPHP\Linter\Json\JsonLintError;
 use GrumPHP\Linter\LinterInterface;
 use GrumPHP\Linter\Yaml\YamlLintError;
-use GrumPHP\Util\Filesystem;
 use Pnnl\PrettyJSONYAML\Exception\OrderException;
 use Pnnl\PrettyJSONYAML\Parser\ParserInterface;
 use Seld\JsonLint\ParsingException;
@@ -24,13 +23,6 @@ abstract class AbstractPrettyLinter implements LinterInterface
 
     /** @var ParserInterface $parser - Parser to convert the string content into a structured array */
     protected $parser;
-
-    /**
-     * Interact with the files
-     *
-     * @var \GrumPHP\Util\Filesystem
-     */
-    protected $filesystem;
 
     /** @var string $content - The string content of the data file to be parsed */
     protected $content;
@@ -55,10 +47,9 @@ abstract class AbstractPrettyLinter implements LinterInterface
      *
      * @param ParserInterface $parser
      */
-    public function __construct(ParserInterface $parser, Filesystem $filesystem)
+    public function __construct(ParserInterface $parser)
     {
         $this->parser = $parser;
-        $this->filesystem = $filesystem;
     }
 
 

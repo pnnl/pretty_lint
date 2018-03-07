@@ -9,6 +9,7 @@
 namespace Pnnl\PrettyJSONYAML\Parser;
 
 
+use GrumPHP\Util\Filesystem;
 use Seld\JsonLint\ParsingException;
 use SplFileInfo;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -21,7 +22,7 @@ interface ParserInterface
      *
      * @param int $indent - the size of the indent
      */
-    public function __construct($indent);
+    public function __construct(Filesystem $filesystem);
 
     /**
      * Parse a string into data

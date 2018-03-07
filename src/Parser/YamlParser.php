@@ -8,6 +8,7 @@
 
 namespace Pnnl\PrettyJSONYAML\Parser;
 
+use GrumPHP\Util\Filesystem;
 use ReflectionClass;
 use ReflectionException;
 use SplFileInfo;
@@ -32,13 +33,16 @@ class YamlParser implements ParserInterface
     /** @var int $indent - number of spaces to indent each level */
     private $indent;
 
+    /** @var Filesystem $filesystem*/
+    private $filesystem;
+
 
     /**
      * {@inheritdoc}
      */
-    public function __construct($indent = 2)
+    public function __construct(Filesystem $filesystem)
     {
-        $this->indent = $indent;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -84,7 +88,7 @@ class YamlParser implements ParserInterface
     public function dumpFile(array $data, SplFileInfo $file)
     {
         $yaml = $this->dump($data);
-        file_put_contents($file->getPathname(), $yaml);
+        $this->filesystem->dumpFile($file->getPathname(), $yaml);
     }
 
     /**
