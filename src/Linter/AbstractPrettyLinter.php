@@ -64,8 +64,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
 
         try {
             // Read the data from the file
-            $this->content = $this->filesystem->readFromFileInfo($file);
-            $this->data = $this->parser->parse($this->content);
+            $this->data = $this->parser->parseFile($file);
+            $this->content = $this->parser->dump($this->data);
             // Sort the data and convert back to a string
             $this->sort($this->data);
             $this->sorted = $this->parser->dump($this->data);
