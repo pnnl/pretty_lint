@@ -1,11 +1,8 @@
 parameters:
-  git_dir: .
   bin_dir: vendor/bin
-  tasks: {}
-#  extensions:
-#    - Pnnl\PrettyJSONYAML\Extension\Loader
-#services:
-#  formatter.prettyjson:
-#    class: Pnnl\PrettyJSONYAML\Formatter\PrettyJsonFormatter
-#  formatter.prettyyaml:
-#    class: Pnnl\PrettyJSONYAML\Formatter\PrettyYamlFormatter
+  extensions:
+    - Pnnl\PrettyJSONYAML\Extension\Loader
+  git_dir: .
+  tasks:
+    prettyyaml: ~
+    yamllint: ~
