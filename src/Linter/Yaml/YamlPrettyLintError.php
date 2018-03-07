@@ -82,6 +82,7 @@ class YamlPrettyLintError extends LintError
      */
     public function __toString()
     {
-        return sprintf('[%s] %s', strtoupper($this->getType()), $this->getError());
+        return sprintf('[%s] %s', strtoupper($this->getType()),
+          $this->getError());
     }
 }

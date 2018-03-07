@@ -69,9 +69,9 @@ abstract class AbstractPrettyLinter implements LinterInterface
             // Sort the data and convert back to a string
             $this->sort($this->data);
             $this->sorted = $this->parser->dump($this->data);
-            // TODO: Compare $content with $sorted fail if different
+            // Compare $content with $sorted - fail if different
             if ($this->content != $this->sorted) {
-                // TODO: Get filename, linenumber, etc. added to exception.
+                // TODO: Get filename, line number, etc. added to exception.
                 /*
                  * Split both into lines
                  * Compare each line to get line number that is different
@@ -79,17 +79,6 @@ abstract class AbstractPrettyLinter implements LinterInterface
                 throw new OrderException("File is not sorted properly", -1,
                   null, $file->getFilename());
             }
-
-            /*
-             * Figure out how to write
-             * - Indent
-             * - Line ending
-             * - Tab style
-             * - empty line at end of file
-             *
-             * from settings in .editorconfig
-             * Maybe should just be settings in grumphp config
-             */
         } catch (OrderException $e) {
             $errors[] = PrettyLintError::fromOrderException($e);
         } catch (ParseException $e) {
@@ -161,5 +150,4 @@ abstract class AbstractPrettyLinter implements LinterInterface
         // Return sorted array
         return $sorted;
     }
-
 }

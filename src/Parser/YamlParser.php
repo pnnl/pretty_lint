@@ -33,9 +33,8 @@ class YamlParser implements ParserInterface
     /** @var int $indent - number of spaces to indent each level */
     private $indent;
 
-    /** @var Filesystem $filesystem*/
+    /** @var Filesystem $filesystem */
     private $filesystem;
-
 
     /**
      * {@inheritdoc}
@@ -52,8 +51,7 @@ class YamlParser implements ParserInterface
     {
         // Lint on Symfony Yaml < 3.1
         if (!$this->supportsFlags()) {
-            return Yaml::parse($data,
-              $this->exceptionOnInvalidType,
+            return Yaml::parse($data, $this->exceptionOnInvalidType,
               $this->objectSupport);
         }
 
@@ -150,6 +148,4 @@ class YamlParser implements ParserInterface
         // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
         $this->parseConstants = $parseConstants && defined('Symfony\Component\Yaml\Yaml::PARSE_CUSTOM_TAGS');
     }
-
-
 }

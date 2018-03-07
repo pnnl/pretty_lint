@@ -54,32 +54,6 @@ class PrettyLintError extends LintError
         );
     }
 
-    // /**
-    //  * @param ParseException $e
-    //  *
-    //  * @return YamlLintError
-    //  */
-    // public static function fromParseException(ParseException $e)
-    // {
-    //     return new YamlLintError(
-    //       LintError::TYPE_ERROR,
-    //       $e->getMessage(),
-    //       $e->getParsedFile(),
-    //       $e->getParsedLine(),
-    //       $e->getSnippet()
-    //     );
-    // }
-
-    // public static function fromParsingException(ParsingException $e)
-    // {
-    //     return new JsonLintError(
-    //       LintError::TYPE_ERROR,
-    //       $e->getMessage(),
-    //       $e->getFile(),
-    //       $e->getLine()
-    //     );
-    // }
-
     public function getSnippet()
     {
         return $this->snippet;

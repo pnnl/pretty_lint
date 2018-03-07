@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Parser;
 
-
 use GrumPHP\Util\Filesystem;
 use Seld\JsonLint\ParsingException;
 use SplFileInfo;
@@ -60,7 +59,7 @@ interface ParserInterface
     /**
      * Dump data into a pretty formatted string and save to file
      *
-     * @param array  $data
+     * @param array       $data
      * @param SplFileInfo $file
      */
     public function dumpFile(array $data, SplFileInfo $file);
@@ -71,5 +70,4 @@ interface ParserInterface
      * @param int $indent
      */
     public function setIndent($indent);
-
 }
