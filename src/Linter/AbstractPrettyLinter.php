@@ -22,11 +22,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 abstract class AbstractPrettyLinter implements LinterInterface
 {
 
-    /**
-     * Parser to convert the string content into a structured array
-     *
-     * @var ParserInterface $parser
-     */
+    /** @var ParserInterface $parser - Parser to convert the string content into a structured array */
     protected $parser;
 
     /**
@@ -36,46 +32,22 @@ abstract class AbstractPrettyLinter implements LinterInterface
      */
     protected $filesystem;
 
-    /**
-     * The string content of the data file to be parsed
-     *
-     * @var string $content
-     */
+    /** @var string $content - The string content of the data file to be parsed */
     protected $content;
 
-    /**
-     * The data array to be sorted
-     *
-     * @var array $data
-     */
+    /** @var array $data - The data array to be sorted */
     protected $data;
 
-    /**
-     * The sorted prettified data object
-     *
-     * @var string $sorted
-     */
+    /** @var string $sorted - The sorted prettified data object */
     protected $sorted;
 
-    /**
-     * Number of spaces to use for the indent
-     *
-     * @var int $indent
-     */
-    protected $indent = 2;
+    /** @var int $indent - Number of spaces to use for the indent */
+    protected $indent;
 
-    /**
-     * Whether or not to sort the keys alphabetically
-     *
-     * @var bool $sort
-     */
+    /** @var bool $sort - Whether or not to sort the keys alphabetically */
     protected $sort = true;
 
-    /**
-     * A sorted list of keys to keep at the top of the alphabetical list
-     *
-     * @var array $topKeys
-     */
+    /** @var array $topKeys - A sorted list of keys to keep at the top of the alphabetical list */
     protected $topKeys = [];
 
     /**

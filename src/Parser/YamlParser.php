@@ -17,35 +17,19 @@ use Symfony\Component\Yaml\Yaml;
 class YamlParser implements ParserInterface
 {
 
-    /**
-     * True if object support is enabled, false otherwise
-     *
-     * @var bool
-     */
+    /** @var bool $objectSupport - True if object support is enabled, false otherwise */
     private $objectSupport = false;
 
-    /**
-     * True if an exception must be thrown on invalid types false otherwise
-     *
-     * @var bool
-     */
+    /** @var bool $exceptionOnInvalidType - True if an exception must be thrown on invalid types false otherwise */
     private $exceptionOnInvalidType = false;
 
-    /**
-     * True if custom tags needs to be parsed
-     *
-     * @var bool
-     */
+    /** @var bool $parseCustomTags - True if custom tags needs to be parsed */
     private $parseCustomTags = false;
 
-    /**
-     * True if PHP constants needs to be parsed
-     *
-     * @var bool
-     */
+    /** @var bool $parseConstants - True if PHP constants needs to be parsed */
     private $parseConstants = false;
 
-    /** @var int $indent */
+    /** @var int $indent - number of spaces to indent each level */
     private $indent;
 
 
