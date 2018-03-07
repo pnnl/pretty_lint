@@ -8,13 +8,9 @@
 
 namespace Pnnl\PrettyJSONYAML\Linter\Yaml;
 
-
-use GrumPHP\Collection\LintErrorsCollection;
 use Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter;
-use Pnnl\PrettyJSONYAML\Linter\LinterInterface;
 use Pnnl\PrettyJSONYAML\Parser\YamlParser;
 use ReflectionException;
-use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -29,21 +25,6 @@ class YamlPrettyLinter extends AbstractPrettyLinter
      * @var YamlParser
      */
     protected $parser;
-
-    /**
-     * @param SplFileInfo $file
-     *
-     * @return LintErrorsCollection
-     */
-    public function lint(SplFileInfo $file)
-    {
-        // $errors = new LintErrorsCollection();
-        //
-        //
-        // return $errors;
-        return parent::lint($file);
-    }
-
 
     /**
      * This method can be used to determine the Symfony Linter version.

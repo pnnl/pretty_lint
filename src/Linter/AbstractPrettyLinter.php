@@ -80,7 +80,6 @@ abstract class AbstractPrettyLinter implements LinterInterface
                   null, $file->getFilename());
             }
 
-            // TODO: Ensure sorted file is consistent with .editorconfig file
             /*
              * Figure out how to write
              * - Indent
