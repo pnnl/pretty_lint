@@ -1,9 +1,6 @@
 hello: world
 person:
-  birth:
-    day: 21
-    month: 04
-    year: 1987
+  birth: 04-21-1987
   height:
     feet: 5
     inches: 7
