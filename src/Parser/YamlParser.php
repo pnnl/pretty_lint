@@ -79,7 +79,7 @@ class YamlParser implements ParserInterface
      */
     public function dump(array $data)
     {
-        return Yaml::dump($data, 0, $this->indent);
+        return Yaml::dump($data, INF, $this->indent);
     }
 
     /**
