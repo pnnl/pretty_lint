@@ -71,13 +71,28 @@ abstract class AbstractPrettyLinter implements LinterInterface
             $this->sorted = $this->parser->dump($this->data);
             // Compare $content with $sorted - fail if different
             if ($this->content != $this->sorted) {
-                // TODO: Get filename, line number, etc. added to exception.
                 /*
                  * Split both into lines
                  * Compare each line to get line number that is different
                  */
-                throw new OrderException("File is not sorted properly", -1,
-                  null, $file->getFilename());
+                $orig = explode("\n", $this->content);
+                $sort = explode("\n", $this->sorted);
+                $count = count($orig);
+                $lineNumber = -1;
+                $snippet = null;
+                for ($i = 0; $i < $count; $i++) {
+                    if ($orig[$i] != $sort[$i]) {
+                        $lineNumber = $i + 1;
+                        $snippet = $orig[$i];
+                        break;
+                    }
+                }
+                throw new OrderException(
+                  "Improper object sort",
+                  $lineNumber,
+                  $snippet,
+                  $file->getFilename()
+                );
             }
         } catch (OrderException $e) {
             $errors[] = PrettyLintError::fromOrderException($e);
