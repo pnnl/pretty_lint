@@ -89,6 +89,9 @@ abstract class AbstractPrettyLinter implements LinterInterface
                         break;
                     }
                 }
+                if ($this->autoFix) {
+                    $this->parser->dumpFile($this->data, $file);
+                }
                 throw new OrderException(
                   "Improper object sort",
                   $lineNumber,
