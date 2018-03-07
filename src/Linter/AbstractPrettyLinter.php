@@ -125,9 +125,9 @@ abstract class AbstractPrettyLinter implements LinterInterface
             }
 
             if (in_array($key, $this->topKeys)) {
-                $before[] = $value;
+                $before[$key] = $value;
             } else {
-                $after[] = $value;
+                $after[$key] = $value;
             }
         }
         // Sort $before according to order listed in $this->topKeys
@@ -135,7 +135,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
 
         // Sort $after alphabetically
         if ($this->sort) {
-            sort($after);
+            ksort($after);
         }
 
         // Set $data to combined sorted data
