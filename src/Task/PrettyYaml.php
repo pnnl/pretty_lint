@@ -9,10 +9,8 @@
 namespace Pnnl\PrettyJSONYAML\Task;
 
 
-use GrumPHP\Runner\TaskResult;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\YamlLint;
-use RuntimeException;
 
 /**
  * Class PrettyYaml
@@ -38,7 +36,7 @@ class PrettyYaml extends YamlLint
         $options->setDefaults([
           'auto_fix' => true,
           'indent' => 2,
-            'top_keys' => [],
+          'top_keys' => [],
         ]);
 
         $options->addAllowedTypes('auto_fix', ['bool']);
@@ -53,31 +51,13 @@ class PrettyYaml extends YamlLint
      */
     public function run(ContextInterface $context)
     {
-        $files = $context->getFiles()->name('/\.(yaml|yml)$/i');
-        if (0 === count($files)) {
-            return TaskResult::createSkipped($this, $context);
-        }
-
+        // Set custom config
         $config = $this->getConfiguration();
         $this->linter->setAutoFix($config['auto_fix']);
         $this->linter->setIndent($config['indent']);
-        $this->linter->setObjectSupport($config['object_support']);
-        $this->linter->setParseConstants($config['parse_constant']);
-        $this->linter->setParseCustomTags($config['parse_custom_tags']);
         $this->linter->setTopKeys($config['top_keys']);
-        $this->linter->setExceptionOnInvalidType($config['exception_on_invalid_type']);
 
-        try {
-            $lintErrors = $this->lint($files);
-        } catch (RuntimeException $e) {
-            return TaskResult::createFailed($this, $context, $e->getMessage());
-        }
-
-        if ($lintErrors->count()) {
-            return TaskResult::createFailed($this, $context,
-              (string)$lintErrors);
-        }
-
-        return TaskResult::createPassed($this, $context);
+        // Run the task
+        return parent::run($context);
     }
 }
