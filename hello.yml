@@ -1,5 +1,7 @@
 hello: world
 person:
+  weight: 157
+  sex: m
   birth: 04-21-1987
   height:
     feet: 5
@@ -8,5 +10,3 @@ person:
     first: Thom
     last: Williams
   phone: 509-619-4181
-  sex: m
-  weight: 157

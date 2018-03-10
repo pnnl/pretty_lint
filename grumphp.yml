@@ -4,5 +4,8 @@ parameters:
     - Pnnl\PrettyJSONYAML\Extension\Loader
   git_dir: .
   tasks:
-    prettyyaml: ~
+    prettyyaml:
+      top_keys:
+        - weight
+        - sex
     yamllint: ~
