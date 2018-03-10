@@ -118,6 +118,11 @@ abstract class AbstractPrettyLinter implements LinterInterface
         $this->autoFix = $autoFix;
     }
 
+    public function setTopKeys(array $keys)
+    {
+        $this->topKeys = $keys;
+    }
+
     /**
      * Sorts the passed array
      *

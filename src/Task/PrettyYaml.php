@@ -38,10 +38,12 @@ class PrettyYaml extends YamlLint
         $options->setDefaults([
           'auto_fix' => true,
           'indent' => 2,
+            'top_keys' => [],
         ]);
 
         $options->addAllowedTypes('auto_fix', ['bool']);
         $options->addAllowedTypes('indent', ['int']);
+        $options->addAllowedTypes('top_keys', ['string[]']);
 
         return $options;
     }
@@ -62,6 +64,7 @@ class PrettyYaml extends YamlLint
         $this->linter->setObjectSupport($config['object_support']);
         $this->linter->setParseConstants($config['parse_constant']);
         $this->linter->setParseCustomTags($config['parse_custom_tags']);
+        $this->linter->setTopKeys($config['top_keys']);
         $this->linter->setExceptionOnInvalidType($config['exception_on_invalid_type']);
 
         try {
