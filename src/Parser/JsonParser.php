@@ -8,8 +8,52 @@
 
 namespace Pnnl\PrettyJSONYAML\Parser;
 
+use GrumPHP\Util\Filesystem;
+use SplFileInfo;
 
-class JsonParser
+class JsonParser implements ParserInterface
 {
+    /** @var int $indent - number of spaces to indent each level */
+    private $indent;
 
+    /** @var Filesystem $filesystem */
+    private $filesystem;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(Filesystem $filesystem)
+    {
+        $this->filesystem = $filesystem;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function parse($data)
+    {
+
+    }
+
+    public function parseFile(SplFileInfo $file)
+    {
+        $json = $this->filesystem->readFromFileInfo($file);
+        return $this->parse($json);
+    }
+
+    public function dump(array $data)
+    {
+
+    }
+
+    public function dumpFile(array $data, SplFileInfo $file)
+    {
+        $json = $this->dump($data);
+        $this->filesystem->dumpFile($file->getPathname(), $json);
+    }
+
+    public function setIndent($indent)
+    {
+        $this->indent = $indent;
+    }
 }
