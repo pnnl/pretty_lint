@@ -4,8 +4,11 @@ parameters:
     - Pnnl\PrettyJSONYAML\Extension\Loader
   git_dir: .
   tasks:
+    prettyjson:
+      top_keys:
+        - name
+        - phone
     prettyyaml:
       top_keys:
         - weight
         - sex
-    yamllint: ~
