@@ -27,9 +27,8 @@
     "squizlabs/php_codesniffer": "^3.2"
   },
   "scripts": {
-    "grumphp": [
-      "grumphp --ansi"
-    ]
+    "cbf": "phpcbf",
+    "grumphp": "grumphp --ansi"
   },
   "type": "project"
 }
