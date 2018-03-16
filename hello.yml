@@ -1,7 +1,7 @@
 hello: world
 person:
-  weight: 157
   sex: m
+  weight: 157
   birth: 04-21-1987
   height:
     feet: 5

@@ -14,6 +14,7 @@ use Seld\JsonLint\ParsingException;
 
 class JsonParser extends AbstractParser
 {
+
     /** @const string REGEX */
     const REGEX = "/^ +/";
 
@@ -58,13 +59,12 @@ class JsonParser extends AbstractParser
                 $line = preg_replace(self::REGEX, $replace, $line);
 
                 // Throw exception if error detected in preg_replace
-                if (NULL === $line) {
+                if (null === $line) {
                     throw new ParsingException("Error occurred setting the proper indent on JSON data.");
                 }
             }
-
         }
-        // Return properly indented JSON string
+        // Recombine lines into single properly indented JSON string
         $content = implode("\n", $split);
         return $content;
     }
