@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Task;
 
-
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\YamlLint;
 
@@ -33,11 +32,13 @@ class PrettyYaml extends YamlLint
     public function getConfigurableOptions()
     {
         $options = parent::getConfigurableOptions();
-        $options->setDefaults([
-          'auto_fix' => true,
-          'indent' => 2,
-          'top_keys' => [],
-        ]);
+        $options->setDefaults(
+            [
+                'auto_fix' => true,
+                'indent' => 2,
+                'top_keys' => [],
+            ]
+        );
 
         $options->addAllowedTypes('auto_fix', ['bool']);
         $options->addAllowedTypes('indent', ['int']);

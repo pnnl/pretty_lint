@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Linter\Yaml;
 
-
 use GrumPHP\Linter\LintError;
 use GrumPHP\Linter\Yaml\YamlLintError;
 use Pnnl\PrettyJSONYAML\Exception\OrderException;
@@ -30,45 +29,45 @@ class YamlPrettyLintError extends LintError
      * @param null   $snippet
      */
     public function __construct(
-      $type,
-      $error,
-      $file,
-      $line = -1,
-      $snippet = null
+        $type,
+        $error,
+        $file,
+        $line = -1,
+        $snippet = null
     ) {
         parent::__construct($type, $error, $file, $line);
         $this->snippet = $snippet;
     }
 
     /**
-     * @param OrderException $e
+     * @param OrderException $exception
      *
      * @return YamlPrettyLintError
      */
-    public static function fromOrderException(OrderException $e)
+    public static function fromOrderException(OrderException $exception)
     {
         return new YamlPrettyLintError(
-          LintError::TYPE_ERROR,
-          $e->getMessage(),
-          $e->getParsedFile(),
-          $e->getParsedLine(),
-          $e->getSnippet()
+            LintError::TYPE_ERROR,
+            $exception->getMessage(),
+            $exception->getParsedFile(),
+            $exception->getParsedLine(),
+            $exception->getSnippet()
         );
     }
 
     /**
-     * @param ParseException $e
+     * @param ParseException $exception
      *
      * @return YamlLintError
      */
-    public static function fromParseException(ParseException $e)
+    public static function fromParseException(ParseException $exception)
     {
         return new YamlLintError(
-          LintError::TYPE_ERROR,
-          $e->getMessage(),
-          $e->getParsedFile(),
-          $e->getParsedLine(),
-          $e->getSnippet()
+            LintError::TYPE_ERROR,
+            $exception->getMessage(),
+            $exception->getParsedFile(),
+            $exception->getParsedLine(),
+            $exception->getSnippet()
         );
     }
 
@@ -82,7 +81,10 @@ class YamlPrettyLintError extends LintError
      */
     public function __toString()
     {
-        return sprintf('[%s] %s', strtoupper($this->getType()),
-          $this->getError());
+        return sprintf(
+            '[%s] %s',
+            strtoupper($this->getType()),
+            $this->getError()
+        );
     }
 }

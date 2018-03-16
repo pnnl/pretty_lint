@@ -34,6 +34,8 @@ class YamlPrettyLinter extends AbstractPrettyLinter
      *
      * @return bool
      * @throws ReflectionException
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public static function supportsFlags()
     {
@@ -57,37 +59,36 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     }
 
     /**
-     * @param boolean $objectSupport
+     * @param boolean $flag
      */
-    public function setObjectSupport($objectSupport)
+    public function setObjectSupport($flag)
     {
-        $this->parser->setObjectSupport($objectSupport);
+        $this->parser->setObjectSupport($flag);
     }
 
     /**
-     * @param bool $parseConstants
+     * @param bool $flag
      */
-    public function setParseConstants($parseConstants)
+    public function setParseConstants($flag)
     {
         // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
-        $this->parser->setParseConstants($parseConstants);
+        $this->parser->setParseConstants($flag);
     }
 
     /**
-     * @param bool $parseCustomTags
+     * @param bool $flag
      */
-    public function setParseCustomTags($parseCustomTags)
+    public function setParseCustomTags($flag)
     {
         // Yaml::PARSE_CONSTANT is only available in Symfony Yaml >= 3.2
-        $this->parser->setParseCustomTags($parseCustomTags);
+        $this->parser->setParseCustomTags($flag);
     }
 
     /**
-     * @param boolean $exceptionOnInvalidType
+     * @param boolean $flag
      */
-    public function setExceptionOnInvalidType($exceptionOnInvalidType)
+    public function setExceptionOnInvalidType($flag)
     {
-        $this->parser->setExceptionOnInvalidType($exceptionOnInvalidType);
+        $this->parser->setExceptionOnInvalidType($flag);
     }
 }
-

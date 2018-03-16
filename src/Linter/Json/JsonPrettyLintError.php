@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Linter\Json;
 
-
 use GrumPHP\Linter\Json\JsonLintError;
 use GrumPHP\Linter\LintError;
 use Pnnl\PrettyJSONYAML\Exception\OrderException;
@@ -28,32 +27,32 @@ class JsonPrettyLintError extends LintError
      * @param string $error
      * @param string $file
      * @param int    $line
-     * @param ''     $snippet
+     * @param string $snippet
      */
     public function __construct(
-      $type,
-      $error,
-      $file,
-      $line = -1,
-      $snippet = ''
+        $type,
+        $error,
+        $file,
+        $line = -1,
+        $snippet = ''
     ) {
         parent::__construct($type, $error, $file, $line);
         $this->snippet = $snippet;
     }
 
     /**
-     * @param OrderException $e
+     * @param OrderException $exception
      *
      * @return JsonPrettyLintError
      */
-    public static function fromOrderException(OrderException $e)
+    public static function fromOrderException(OrderException $exception)
     {
         return new JsonPrettyLintError(
-          LintError::TYPE_ERROR,
-          $e->getMessage(),
-          $e->getParsedFile(),
-          $e->getParsedLine(),
-          $e->getSnippet()
+            LintError::TYPE_ERROR,
+            $exception->getMessage(),
+            $exception->getParsedFile(),
+            $exception->getParsedLine(),
+            $exception->getSnippet()
         );
     }
 
@@ -64,11 +63,15 @@ class JsonPrettyLintError extends LintError
      * @return JsonLintError
      */
     public static function fromParsingException(
-      SplFileInfo $file,
-      ParsingException $exception
+        SplFileInfo $file,
+        ParsingException $exception
     ) {
-        return new JsonLintError(LintError::TYPE_ERROR,
-          $exception->getMessage(), $file->getPathname(), 0);
+        return new JsonLintError(
+            LintError::TYPE_ERROR,
+            $exception->getMessage(),
+            $file->getPathname(),
+            0
+        );
     }
 
     /**
@@ -84,8 +87,10 @@ class JsonPrettyLintError extends LintError
      */
     public function __toString()
     {
-        return sprintf('[%s] %s', strtoupper($this->getType()),
-          $this->getError());
+        return sprintf(
+            '[%s] %s',
+            strtoupper($this->getType()),
+            $this->getError()
+        );
     }
-
 }

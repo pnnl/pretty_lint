@@ -12,7 +12,11 @@ use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Yaml\Yaml;
 
-
+/**
+ * Class YamlParser
+ *
+ * @package Pnnl\PrettyJSONYAML\Parser
+ */
 class YamlParser extends AbstractParser
 {
 
@@ -30,13 +34,18 @@ class YamlParser extends AbstractParser
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function parse($content)
     {
         // Lint on Symfony Yaml < 3.1
         if (!$this->supportsFlags()) {
-            return Yaml::parse($content, $this->exceptionOnInvalidType,
-              $this->objectSupport);
+            return Yaml::parse(
+                $content,
+                $this->exceptionOnInvalidType,
+                $this->objectSupport
+            );
         }
 
         // Lint on Symfony Yaml <= 3.1
@@ -50,6 +59,8 @@ class YamlParser extends AbstractParser
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function dump(array $data)
     {
@@ -67,44 +78,46 @@ class YamlParser extends AbstractParser
      */
     public static function supportsFlags()
     {
-        $rc = new ReflectionClass(Yaml::class);
-        $method = $rc->getMethod('parse');
+        $class = new ReflectionClass(Yaml::class);
+        $method = $class->getMethod('parse');
         $params = $method->getParameters();
 
         return $params[1]->getName() === 'flags';
     }
 
     /**
-     * @param boolean $objectSupport
+     * @param boolean $flag
      */
-    public function setObjectSupport($objectSupport)
+    public function setObjectSupport($flag)
     {
-        $this->objectSupport = $objectSupport;
+        $this->objectSupport = $flag;
     }
 
     /**
-     * @param boolean $exceptionOnInvalidType
+     * @param boolean $flag
      */
-    public function setExceptionOnInvalidType($exceptionOnInvalidType)
+    public function setExceptionOnInvalidType($flag)
     {
-        $this->exceptionOnInvalidType = $exceptionOnInvalidType;
+        $this->exceptionOnInvalidType = $flag;
     }
 
     /**
-     * @param bool $parseCustomTags
+     * @param bool $flag
      */
-    public function setParseCustomTags($parseCustomTags)
+    public function setParseCustomTags($flag)
     {
         // Yaml::PARSE_CONSTANT is only available in Symfony Yaml >= 3.2
-        $this->parseCustomTags = $parseCustomTags && defined('Symfony\Component\Yaml\Yaml::PARSE_CONSTANT');
+        $defined = defined('Symfony\Component\Yaml\Yaml::PARSE_CONSTANT');
+        $this->parseCustomTags = $flag && $defined;
     }
 
     /**
-     * @param bool $parseConstants
+     * @param bool $flag
      */
-    public function setParseConstants($parseConstants)
+    public function setParseConstants($flag)
     {
         // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
-        $this->parseConstants = $parseConstants && defined('Symfony\Component\Yaml\Yaml::PARSE_CUSTOM_TAGS');
+        $defined = defined('Symfony\Component\Yaml\Yaml::PARSE_CUSTOM_TAGS');
+        $this->parseConstants = $flag && $defined;
     }
 }

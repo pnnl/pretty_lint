@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Linter;
 
-
 use GrumPHP\Linter\LintError;
 use Pnnl\PrettyJSONYAML\Exception\OrderException;
 
@@ -28,29 +27,29 @@ class PrettyLintError extends LintError
      * @param null   $snippet
      */
     public function __construct(
-      $type,
-      $error,
-      $file,
-      $line = -1,
-      $snippet = null
+        $type,
+        $error,
+        $file,
+        $line = -1,
+        $snippet = null
     ) {
         parent::__construct($type, $error, $file, $line);
         $this->snippet = $snippet;
     }
 
     /**
-     * @param OrderException $e
+     * @param OrderException $exception
      *
      * @return static
      */
-    public static function fromOrderException(OrderException $e)
+    public static function fromOrderException(OrderException $exception)
     {
         return new static(
-          LintError::TYPE_ERROR,
-          $e->getMessage(),
-          $e->getParsedFile(),
-          $e->getParsedLine(),
-          $e->getSnippet()
+            LintError::TYPE_ERROR,
+            $exception->getMessage(),
+            $exception->getParsedFile(),
+            $exception->getParsedLine(),
+            $exception->getSnippet()
         );
     }
 
@@ -64,8 +63,10 @@ class PrettyLintError extends LintError
      */
     public function __toString()
     {
-        return sprintf('[%s] %s', strtoupper($this->getType()),
-          $this->getError());
+        return sprintf(
+            '[%s] %s',
+            strtoupper($this->getType()),
+            $this->getError()
+        );
     }
-
 }

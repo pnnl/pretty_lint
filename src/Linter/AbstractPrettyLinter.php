@@ -59,6 +59,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
      * @param SplFileInfo $file
      *
      * @return LintErrorsCollection
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function lint(SplFileInfo $file)
     {
@@ -93,10 +95,10 @@ abstract class AbstractPrettyLinter implements LinterInterface
                     $this->parser->dumpFile($this->data, $file);
                 }
                 throw new OrderException(
-                  "Improper object sort",
-                  $lineNumber,
-                  $snippet,
-                  $file->getFilename()
+                    "Improper object sort",
+                    $lineNumber,
+                    $snippet,
+                    $file->getFilename()
                 );
             }
         } catch (OrderException $e) {
@@ -130,6 +132,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
      *
      * @return void
      * @throws OrderException
+     *
+     * @SuppressWarnings(PHPMD.ElseExpression)
      */
     private function sort(array &$data)
     {

@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Linter\Json;
 
-
 use Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter;
 use Pnnl\PrettyJSONYAML\Parser\JsonParser;
 use Seld\JsonLint\JsonParser as SJsonParser;
@@ -57,4 +56,3 @@ class JsonPrettyLinter extends AbstractPrettyLinter
         return $flags;
     }
 }
-

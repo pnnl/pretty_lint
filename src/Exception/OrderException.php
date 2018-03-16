@@ -16,16 +16,24 @@ namespace Pnnl\PrettyJSONYAML\Exception;
 class OrderException extends \Exception
 {
 
-    /** @var string $parsedFile */
+    /**
+     * @var string $parsedFile
+     */
     private $parsedFile;
 
-    /** @var int $parsedLine */
+    /**
+     * @var int $parsedLine
+     */
     private $parsedLine;
 
-    /** @var string $snippet */
+    /**
+     * @var string $snippet
+     */
     private $snippet;
 
-    /** @var string $rawMessage */
+    /**
+     * @var string $rawMessage
+     */
     private $rawMessage;
 
     /**
@@ -38,11 +46,11 @@ class OrderException extends \Exception
      * @param \Exception|null $previous   The previous exception
      */
     public function __construct(
-      $message,
-      $parsedLine = -1,
-      $snippet = null,
-      $parsedFile = null,
-      \Exception $previous = null
+        $message,
+        $parsedLine = -1,
+        $snippet = null,
+        $parsedFile = null,
+        \Exception $previous = null
     ) {
         $this->parsedFile = $parsedFile;
         $this->parsedLine = $parsedLine;
@@ -136,8 +144,9 @@ class OrderException extends \Exception
         }
 
         if (null !== $this->parsedFile) {
-            $this->message .= sprintf(' in %s', json_encode($this->parsedFile,
-              JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+            $flags = JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+            $json = json_encode($this->parsedFile, $flags);
+            $this->message .= sprintf(' in %s', $json);
         }
 
         if ($this->parsedLine >= 0) {

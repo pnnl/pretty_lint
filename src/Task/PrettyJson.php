@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Task;
 
-
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\JsonLint;
 
@@ -60,5 +59,4 @@ class PrettyJson extends JsonLint
         // Run the task
         return parent::run($context);
     }
-
 }

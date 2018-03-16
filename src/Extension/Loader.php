@@ -8,7 +8,6 @@
 
 namespace Pnnl\PrettyJSONYAML\Extension;
 
-
 use GrumPHP\Extension\ExtensionInterface;
 use Pnnl\PrettyJSONYAML\Linter\Json\JsonPrettyLinter;
 use Pnnl\PrettyJSONYAML\Linter\Yaml\YamlPrettyLinter;
