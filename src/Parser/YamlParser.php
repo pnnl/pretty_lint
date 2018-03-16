@@ -64,7 +64,7 @@ class YamlParser extends AbstractParser
      */
     public function dump(array $data)
     {
-        return Yaml::dump($data, INF, $this->indent);
+        return Yaml::dump($data, intval(INF), $this->indent);
     }
 
     /**
