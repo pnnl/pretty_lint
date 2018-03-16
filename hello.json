@@ -1,18 +1,17 @@
 {
   "hello": "world",
   "person": {
-    "birth": "04-21-1987",
-    "height": {
-      "feet": 5,
-      "inches": 7
-    },
     "name": {
       "first": "Thom",
       "last": "Williams"
     },
     "phone": "509-619-4181",
+    "birth": "04-21-1987",
+    "height": {
+      "feet": 5,
+      "inches": 7
+    },
     "sex": "m",
     "weight": 157
   }
 }
-

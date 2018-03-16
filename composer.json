@@ -1,28 +1,30 @@
 {
     "name": "will202/grumphp",
     "description": "Play around with Grumphp",
-    "type": "project",
-    "license": "MIT",
     "authors": [
         {
             "name": "Thom Williams",
             "email": "thom.williams@pnnl.gov"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {
-        "phpro/grumphp": "^0.12.1"
-    },
-    "prefer-stable": true,
-    "config": {
-        "sort-packages": true
-    },
     "autoload": {
         "psr-4": {
             "Pnnl\\PrettyJSONYAML\\": "src"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "phpro/grumphp": "^0.12.1"
+    },
     "scripts": {
-        "grumphp": ["grumphp --ansi"]
-    }
+        "grumphp": [
+            "grumphp --ansi"
+        ]
+    },
+    "type": "project"
 }
