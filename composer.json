@@ -1,6 +1,6 @@
 {
   "name": "pnnl/pretty_lint",
-  "description": "Play around with Grumphp",
+  "description": "Pretty Lint JSON and YAML files",
   "authors": [
     {
       "name": "Thom Williams",
