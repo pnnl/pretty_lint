@@ -31,26 +31,30 @@ class JsonParser extends AbstractParser
      */
     public function parse($content)
     {
-
-    }
-
-    public function parseFile(SplFileInfo $file)
-    {
-        $json = $this->filesystem->readFromFileInfo($file);
-        return $this->parse($json);
+        return $this->jsonParser->parse($content, $this->calculateParseFlags());
     }
 
     public function dump(array $data)
     {
+        $content = json_encode($data, $this->calculateDumpFlags());
 
+        // TODO: Update content to use proper indent
+        return $content;
     }
 
-    public function dumpFile(array $data, SplFileInfo $file)
+    /**
+     * @return int
+     */
+    private function calculateDumpFlags()
     {
-        $json = $this->dump($data);
-        $this->filesystem->dumpFile($file->getPathname(), $json);
+        return JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
     }
 
+    /**
+     * @return int
+     */
+    private function calculateParseFlags()
     {
+        return SJsonParser::DETECT_KEY_CONFLICTS | SJsonParser::PARSE_TO_ASSOC;
     }
 }
