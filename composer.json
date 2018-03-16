@@ -1,10 +1,10 @@
 {
-  "name": "will202/grumphp",
+  "name": "pnnl/pretty_lint",
   "description": "Play around with Grumphp",
   "authors": [
     {
       "name": "Thom Williams",
-      "email": "thom.williams@pnnl.gov"
+      "email": "thomscode@gmail.com"
     }
   ],
   "autoload": {
