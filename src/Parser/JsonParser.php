@@ -30,7 +30,7 @@ class JsonParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse($data)
+    public function parse($content)
     {
 
     }

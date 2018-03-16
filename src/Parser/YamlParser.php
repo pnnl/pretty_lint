@@ -47,11 +47,11 @@ class YamlParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse($data)
+    public function parse($content)
     {
         // Lint on Symfony Yaml < 3.1
         if (!$this->supportsFlags()) {
-            return Yaml::parse($data, $this->exceptionOnInvalidType,
+            return Yaml::parse($content, $this->exceptionOnInvalidType,
               $this->objectSupport);
         }
 

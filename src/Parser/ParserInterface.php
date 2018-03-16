@@ -26,14 +26,14 @@ interface ParserInterface
     /**
      * Parse a string into data
      *
-     * @param string $data
+     * @param string $content
      *
      * @return array
      *
      * @throws ParseException
      * @throws ParsingException
      */
-    public function parse($data);
+    public function parse($content);
 
     /**
      * Parse the contents of a file into data
