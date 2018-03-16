@@ -19,7 +19,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "phpro/grumphp": "^0.12.1"
+    "phpro/grumphp": "^0.14"
   },
   "require-dev": {
     "jakub-onderka/php-parallel-lint": "^1.0",
