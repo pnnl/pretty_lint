@@ -16,6 +16,7 @@ use Pnnl\PrettyJSONYAML\Parser\JsonParser;
 use Pnnl\PrettyJSONYAML\Parser\YamlParser;
 use Pnnl\PrettyJSONYAML\Task\PrettyJson;
 use Pnnl\PrettyJSONYAML\Task\PrettyYaml;
+use Seld\JsonLint\JsonParser as SJsonParser;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Loader implements ExtensionInterface
@@ -43,10 +44,10 @@ class Loader implements ExtensionInterface
           ->addArgument($container->get("linter.yamlprettylinter"))
           ->addTag('grumphp.task', ['config' => 'prettyyaml']);
 
-
         // Create the JSON Parser
         $container->register("parser.jsonparser", JsonParser::class)
-          ->addArgument($container->get('grumphp.util.filesystem'));
+          ->addArgument($container->get('grumphp.util.filesystem'))
+            ->addArgument($container->get("json.parser"));
 
         // Create the JSON Linter
         $container->register("linter.jsonprettylinter", JsonPrettyLinter::class)

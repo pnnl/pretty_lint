@@ -9,22 +9,21 @@
 namespace Pnnl\PrettyJSONYAML\Parser;
 
 use GrumPHP\Util\Filesystem;
-use SplFileInfo;
+use Seld\JsonLint\JsonParser as SJsonParser;
 
-class JsonParser implements ParserInterface
+class JsonParser extends AbstractParser
 {
-    /** @var int $indent - number of spaces to indent each level */
-    private $indent;
 
-    /** @var Filesystem $filesystem */
-    private $filesystem;
+    /** @var SJsonParser */
+    private $jsonParser;
 
     /**
      * {@inheritdoc}
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(Filesystem $filesystem, SJsonParser $jsonParser)
     {
-        $this->filesystem = $filesystem;
+        parent::__construct($filesystem);
+        $this->jsonParser = $jsonParser;
     }
 
     /**
