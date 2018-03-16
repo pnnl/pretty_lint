@@ -52,8 +52,6 @@ class JsonParser implements ParserInterface
         $this->filesystem->dumpFile($file->getPathname(), $json);
     }
 
-    public function setIndent($indent)
     {
-        $this->indent = $indent;
     }
 }

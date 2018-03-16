@@ -17,13 +17,6 @@ interface ParserInterface
 {
 
     /**
-     * ParserInterface constructor.
-     *
-     * @param int $indent - the size of the indent
-     */
-    public function __construct(Filesystem $filesystem);
-
-    /**
      * Parse a string into data
      *
      * @param string $content

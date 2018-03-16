@@ -8,14 +8,12 @@
 
 namespace Pnnl\PrettyJSONYAML\Parser;
 
-use GrumPHP\Util\Filesystem;
 use ReflectionClass;
 use ReflectionException;
-use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 
-class YamlParser implements ParserInterface
+class YamlParser extends AbstractParser
 {
 
     /** @var bool $objectSupport - True if object support is enabled, false otherwise */
@@ -29,20 +27,6 @@ class YamlParser implements ParserInterface
 
     /** @var bool $parseConstants - True if PHP constants needs to be parsed */
     private $parseConstants = false;
-
-    /** @var int $indent - number of spaces to indent each level */
-    private $indent;
-
-    /** @var Filesystem $filesystem */
-    private $filesystem;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-    }
 
     /**
      * {@inheritdoc}
@@ -61,15 +45,7 @@ class YamlParser implements ParserInterface
         $flags |= $this->exceptionOnInvalidType ? Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE : 0;
         $flags |= $this->parseConstants ? Yaml::PARSE_CONSTANT : 0;
         $flags |= $this->parseCustomTags ? Yaml::PARSE_CUSTOM_TAGS : 0;
-        return Yaml::parse($data, $flags);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function parseFile(SplFileInfo $file)
-    {
-        return Yaml::parseFile($file->getPathname());
+        return Yaml::parse($content, $flags);
     }
 
     /**
@@ -78,23 +54,6 @@ class YamlParser implements ParserInterface
     public function dump(array $data)
     {
         return Yaml::dump($data, INF, $this->indent);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function dumpFile(array $data, SplFileInfo $file)
-    {
-        $yaml = $this->dump($data);
-        $this->filesystem->dumpFile($file->getPathname(), $yaml);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setIndent($indent)
-    {
-        $this->indent = $indent;
     }
 
     /**
