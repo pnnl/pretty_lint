@@ -152,6 +152,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
                 $after[$key] = $value;
             }
         }
+        // TODO: Allow global and per file top keys
         // Sort $before according to order listed in $this->topKeys
         $before = $this->sortByTopKeys($before);
 
