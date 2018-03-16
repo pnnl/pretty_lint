@@ -179,7 +179,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
         // Merge arrays to sort by order in $keys
         $merged = array_merge($keys, $data);
         // Remove any keys not in $data
-        $sorted = array_intersect_assoc($merged, $data);
+        $sorted = @array_intersect_assoc($merged, $data);
         // Return sorted array
         return $sorted;
     }
