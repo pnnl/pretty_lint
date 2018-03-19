@@ -29,6 +29,9 @@ class PrettyYaml extends YamlLint
         return 'prettyyaml';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getConfigurableOptions()
     {
         $options = parent::getConfigurableOptions();

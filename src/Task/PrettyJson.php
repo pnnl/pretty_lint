@@ -20,7 +20,7 @@ use GrumPHP\Task\JsonLint;
  */
 class PrettyJson extends JsonLint
 {
-    // TODO: Join this and the PrettyYaml tasks into an abstract class except for get Name method
+
     /**
      * @return string
      */
@@ -29,14 +29,19 @@ class PrettyJson extends JsonLint
         return "prettyjson";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getConfigurableOptions()
     {
         $options = parent::getConfigurableOptions();
-        $options->setDefaults([
-          'auto_fix' => true,
-          'indent' => 2,
-          'top_keys' => [],
-        ]);
+        $options->setDefaults(
+            [
+                'auto_fix' => true,
+                'indent' => 2,
+                'top_keys' => [],
+            ]
+        );
 
         $options->addAllowedTypes('auto_fix', ['bool']);
         $options->addAllowedTypes('indent', ['int']);
