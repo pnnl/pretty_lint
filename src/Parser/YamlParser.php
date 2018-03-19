@@ -64,7 +64,8 @@ class YamlParser extends AbstractParser
      */
     public function dump(array $data)
     {
-        return Yaml::dump($data, intval(INF), $this->indent);
+        // Cannot use INF since it returns a float and Yaml::dump requires an INT
+        return Yaml::dump($data, PHP_INT_MAX, $this->indent);
     }
 
     /**
