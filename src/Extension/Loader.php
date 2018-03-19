@@ -9,13 +9,9 @@
 namespace Pnnl\PrettyJSONYAML\Extension;
 
 use GrumPHP\Extension\ExtensionInterface;
-use Pnnl\PrettyJSONYAML\Linter\Json\JsonPrettyLinter;
-use Pnnl\PrettyJSONYAML\Linter\Yaml\YamlPrettyLinter;
-use Pnnl\PrettyJSONYAML\Parser\JsonParser;
-use Pnnl\PrettyJSONYAML\Parser\YamlParser;
-use Pnnl\PrettyJSONYAML\Task\PrettyJson;
-use Pnnl\PrettyJSONYAML\Task\PrettyYaml;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Loader implements ExtensionInterface
 {
@@ -27,34 +23,11 @@ class Loader implements ExtensionInterface
      */
     public function load(ContainerBuilder $container)
     {
-        // Create appropriate dependency injection
-        // Create the YAML parser
-        $container->register("parser.yamlParser", YamlParser::class)
-            ->addArgument($container->get('grumphp.util.filesystem'));
-
-        // Create the YAML Linter
-        $container->register("linter.yamlprettylinter", YamlPrettyLinter::class)
-            ->addArgument($container->get("parser.yamlParser"));
-
-        // Create the YAML task
-        $container->register('task.prettyyaml', PrettyYaml::class)
-            ->addArgument($container->get('config'))
-            ->addArgument($container->get("linter.yamlprettylinter"))
-            ->addTag('grumphp.task', ['config' => 'prettyyaml']);
-
-        // Create the JSON Parser
-        $container->register("parser.jsonParser", JsonParser::class)
-            ->addArgument($container->get('grumphp.util.filesystem'))
-            ->addArgument($container->get("json.parser"));
-
-        // Create the JSON Linter
-        $container->register("linter.jsonprettylinter", JsonPrettyLinter::class)
-            ->addArgument($container->get("parser.jsonParser"));
-
-        // Create the JSON Task
-        $container->register("task.prettyjson", PrettyJson::class)
-            ->addArgument($container->get("config"))
-            ->addArgument($container->get("linter.jsonprettylinter"))
-            ->addTag("grumphp.task", ['config' => 'prettyjson']);
+        $location = __DIR__ . "/../../resources/config";
+        $locator = new FileLocator($location);
+        $loader = new YamlFileLoader($container, $locator);
+        $loader->load('parsers.yml');
+        $loader->load('linters.yml');
+        $loader->load('tasks.yml');
     }
 }

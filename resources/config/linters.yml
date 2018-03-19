@@ -1,0 +1,9 @@
+services:
+  linter.jsonprettylinter:
+    arguments:
+      - '@parser.jsonparser'
+    class: Pnnl\PrettyJSONYAML\Linter\Json\JsonPrettyLinter
+  linter.yamlprettylinter:
+    arguments:
+      - '@parser.yamlparser'
+    class: Pnnl\PrettyJSONYAML\Linter\Yaml\YamlPrettyLinter

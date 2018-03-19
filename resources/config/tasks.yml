@@ -1,0 +1,17 @@
+services:
+  task.prettyjson:
+    arguments:
+      - '@config'
+      - '@linter.jsonprettylinter'
+    class: Pnnl\PrettyJSONYAML\Task\PrettyJson
+    tags:
+      - config: prettyjson
+        name: grumphp.task
+  task.prettyyaml:
+    arguments:
+      - '@config'
+      - '@linter.yamlprettylinter'
+    class: Pnnl\PrettyJSONYAML\Task\PrettyYaml
+    tags:
+      - config: prettyyaml
+        name: grumphp.task
