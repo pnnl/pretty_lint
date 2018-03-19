@@ -42,7 +42,7 @@ class PrettyYaml extends YamlLint
 
         $options->addAllowedTypes('auto_fix', ['bool']);
         $options->addAllowedTypes('indent', ['int']);
-        $options->addAllowedTypes('top_keys', ['string[]']);
+        $options->addAllowedTypes('top_keys', ['array']);
 
         return $options;
     }

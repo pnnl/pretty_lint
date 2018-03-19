@@ -8,6 +8,7 @@
 
 namespace Pnnl\PrettyJSONYAML\Linter;
 
+use Dflydev\DotAccessData\Data;
 use GrumPHP\Collection\LintErrorsCollection;
 use GrumPHP\Linter\Json\JsonLintError;
 use GrumPHP\Linter\LinterInterface;
@@ -27,6 +28,9 @@ abstract class AbstractPrettyLinter implements LinterInterface
     /** @var string $content - The string content of the data file to be parsed */
     protected $content;
 
+    /** @var SplFileInfo $currentFile - The current file being sorted */
+    protected $currentFile;
+
     /** @var array $data - The data array to be sorted */
     protected $data;
 
@@ -42,8 +46,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
     /** @var string $sorted - The sorted prettified data object */
     protected $sorted;
 
-    /** @var array $topKeys - A sorted list of keys to keep at the top of the alphabetical list */
-    protected $topKeys = [];
+    /** @var Data $topKeys - A sorted list of keys to keep at the top of the alphabetical list */
+    protected $topKeys;
 
     /**
      * AbstractPrettyLinter constructor.
@@ -53,6 +57,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
     public function __construct(ParserInterface $parser)
     {
         $this->parser = $parser;
+        $this->topKeys = new Data();
     }
 
     /**
@@ -68,6 +73,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
 
         try {
             // Read the data from the file
+            $this->currentFile = $file;
             $this->data = $this->parser->parseFile($file);
             $this->content = $this->parser->dump($this->data);
             // Sort the data and convert back to a string
@@ -120,22 +126,36 @@ abstract class AbstractPrettyLinter implements LinterInterface
         $this->autoFix = $autoFix;
     }
 
+    /**
+     * @param array $keys
+     */
     public function setTopKeys(array $keys)
     {
-        $this->topKeys = $keys;
+        $formatted = [];
+        foreach ($keys as $key) {
+            if (is_string($key)) {
+                $formatted['global'][] = $key;
+            } elseif (is_array($key) &&
+                isset($key['name']) &&
+                isset($key['keys'])) {
+                $name = $this->sanitizeFileName($key['name']);
+                $formatted['files'][$name] = $key['keys'];
+            }
+        }
+        $this->topKeys = new Data($formatted);
     }
 
     /**
      * Sorts the passed array
      *
-     * @param array $data
+     * @param array $data - The data to sort
      *
      * @return void
      * @throws OrderException
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
      */
-    private function sort(array &$data)
+    protected function sort(array &$data)
     {
         // Don't sort $data if all numeric keys
         if (count(array_filter(array_keys($data), 'is_string')) == 0) {
@@ -144,19 +164,19 @@ abstract class AbstractPrettyLinter implements LinterInterface
 
         $before = [];
         $after = [];
+        $fileKeys = $this->getCurrentFileKeys();
 
         foreach ($data as $key => &$value) {
             if (is_array($value)) {
                 $this->sort($value);
             }
 
-            if (in_array($key, $this->topKeys)) {
+            if (in_array($key, $fileKeys)) {
                 $before[$key] = $value;
             } else {
                 $after[$key] = $value;
             }
         }
-        // TODO: Allow global and per file top keys
         // Sort $before according to order listed in $this->topKeys
         $before = $this->sortByTopKeys($before);
 
@@ -177,15 +197,45 @@ abstract class AbstractPrettyLinter implements LinterInterface
      *
      * @return array The sorted array
      */
-    private function sortByTopKeys(array $data)
+    protected function sortByTopKeys(array $data)
     {
         // Make the desired values sorted keys (instead of numeric keys)
-        $keys = array_flip($this->topKeys);
+        $keys = array_flip($this->getCurrentFileKeys());
         // Merge arrays to sort by order in $keys
         $merged = array_merge($keys, $data);
         // Remove any keys not in $data
         $sorted = @array_intersect_assoc($merged, $data);
         // Return sorted array
         return $sorted;
+    }
+
+    /**
+     * Get all of the keys that should apply for the specified file
+     * Global keys take precedence
+     *
+     * @return array
+     */
+    protected function getCurrentFileKeys()
+    {
+        $keys = $this->topKeys->has('global') ?
+            $this->topKeys->get('global') :
+            [];
+        $sanName = $this->sanitizeFileName($this->currentFile->getFilename());
+        $name = "files.$sanName";
+
+        if ($this->topKeys->has($name)) {
+            $keys = array_merge($keys, $this->topKeys->get($name));
+        }
+        return $keys;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    private function sanitizeFileName($name)
+    {
+        return str_replace('.', '_', $name);
     }
 }
