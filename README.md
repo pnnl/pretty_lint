@@ -70,6 +70,29 @@ Number of spaces to indent the file when auto-fixing errors.
 *Default: []*
 
 This option determines what keys should be at the top of an object instead of alphabetical.
+It allows both global and per file keys. Keys added as strings are global while an object 
+with the `name` and `keys` array represent file specific keys and will apply to any file whose 
+name matches the value in `name`.
+
+*Example:*
+```yaml
+parameters:
+  tasks:
+    prettyjson:
+      top_keys:
+        - name # This is a global object key
+        - name: composer.json
+          keys:
+            - description # This key will apply to any file named "composer.json"
+    prettyyaml:
+      top_keys:
+        - name # It's the same in yaml, this is a global object key
+        - 
+          name: grumphp.yml # This is the same syntax as above, just formatted a little different
+          keys:
+            - extensions # Both of these keys apply only to the grumphp.yml file
+            - vendor_dir
+```
 
 **Other parameters**
 See [`jsonlint`](https://github.com/phpro/grumphp/blob/master/doc/tasks/jsonlint.md) 
