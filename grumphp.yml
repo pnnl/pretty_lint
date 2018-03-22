@@ -13,16 +13,18 @@ parameters:
     phpparser:
       kind: php5
     phpversion:
-      project: "5.6"
+      project: '5.6'
     prettyjson:
       top_keys:
         - name
-        -
-          name: composer.json
+        - name: composer.json
           keys:
             - description
             - php
     prettyyaml:
+      ignore_patterns:
+        - tests/config
+        - tests/fixtures
       top_keys:
         - extensions
     securitychecker: ~
