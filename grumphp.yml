@@ -4,11 +4,16 @@ parameters:
   bin_dir: vendor/bin
   git_dir: .
   tasks:
-    composer: null
+    composer: ~
+    file_size: ~
     phpcs:
       standard: PSR2
-    phplint: null
-    phpmd: null
+    phplint: ~
+    phpmd: ~
+    phpparser:
+      kind: php5
+    phpversion:
+      project: "5.6"
     prettyjson:
       top_keys:
         - name
@@ -20,3 +25,4 @@ parameters:
     prettyyaml:
       top_keys:
         - extensions
+    securitychecker: ~
