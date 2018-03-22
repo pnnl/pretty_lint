@@ -8,7 +8,7 @@
 
 namespace Pnnl\Tests;
 
-class ParserTest
+class AbstractParserTest
 {
 
 }

@@ -8,7 +8,7 @@
 
 namespace Pnnl\Tests;
 
-class TaskTest
+class AbstractTaskTest
 {
 
 }

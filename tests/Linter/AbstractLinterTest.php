@@ -6,35 +6,40 @@
  * Time: 7:45 AM
  */
 
-namespace Pnnl\Tests;
+namespace Pnnl\Tests\Linter;
 
 use GrumPHP\Collection\LintErrorsCollection;
-use GrumPHP\Util\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter;
 use Pnnl\PrettyJSONYAML\Linter\PrettyLintError;
-use Pnnl\PrettyJSONYAML\Linter\Yaml\YamlPrettyLinter;
-use Pnnl\PrettyJSONYAML\Parser\YamlParser;
+use Pnnl\PrettyJSONYAML\Parser\ParserInterface;
 use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
-class LinterTest extends TestCase
+abstract class AbstractLinterTest extends TestCase
 {
 
-    /** @var YamlPrettyLinter $linter */
+    /** @const string */
+    const JSON = 'json';
+
+    /** @const string */
+    const YAML = 'yaml';
+
+    /** @var AbstractPrettyLinter $linter */
     protected $linter;
+
+    /** @var ParserInterface */
+    protected $parser;
+
+    /** @var string $type */
+    protected $type;
 
     /**
      * Test setup method
      */
     protected function setUp()
     {
-        $this->linter = new YamlPrettyLinter(
-            new YamlParser(
-                new Filesystem()
-            )
-        );
-
         $config = [
             'auto_fix' => false,
             'indent' => 2,
@@ -53,14 +58,13 @@ class LinterTest extends TestCase
      */
     private function importConfig($config)
     {
-        $file = new SplFileInfo(__DIR__ . "/config/" . $config);
+        $file = new SplFileInfo(__DIR__ . "/../config/" . $config);
         if (!$file->isReadable()) {
             throw new RuntimeException(
                 sprintf("The config %s could not be loaded!", $config)
             );
         }
 
-        $filesystem = new Filesystem();
         $configData = Yaml::parseFile($file->getPathname());
         $this->updateConfig($configData);
     }
@@ -90,7 +94,8 @@ class LinterTest extends TestCase
      */
     private function getFixture($fixture)
     {
-        $file = new SplFileInfo(__DIR__ . "/fixtures/yaml/" . $fixture);
+        $path = __DIR__ . "/../fixtures/" . $this->type . "/" . $fixture;
+        $file = new SplFileInfo($path);
         if (!$file->isReadable()) {
             throw new RuntimeException(
                 sprintf("The fixture %s could not be loaded!", $fixture)
@@ -136,13 +141,7 @@ class LinterTest extends TestCase
     /**
      * @return array
      */
-    public function dataForCheckIndentation()
-    {
-        return [
-            ['indentValid.yml', 0],
-            ['indentInvalid.yml', 1],
-        ];
-    }
+    abstract public function dataForCheckIndentation();
 
     /**
      * @test
@@ -152,6 +151,15 @@ class LinterTest extends TestCase
      * @param string $config
      *
      * @dataProvider dataForSortOrder
+     *
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::__construct()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::lint()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::setAutoFix()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::setIndent()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::setTopKeys()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::sort()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::sortByTopKeys()
+     * @covers       \Pnnl\PrettyJSONYAML\Linter\AbstractPrettyLinter::getCurrentFileKeys()
      */
     public function testSortOrder($fixture, $errors, $config = '')
     {
@@ -164,15 +172,7 @@ class LinterTest extends TestCase
     /**
      * @return array
      */
-    public function dataForSortOrder()
-    {
-        return [
-            ['sortValid.yml', 0],
-            ['sortInvalid.yml', 1],
-            ['sortTopValid.yml', 0, 'topKeys.yml'],
-            ['sortTopInvalid.yml', 1, 'topKeys.yml'],
-        ];
-    }
+    abstract public function dataForSortOrder();
 
     public function testAutoFix()
     {
