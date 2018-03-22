@@ -128,6 +128,15 @@ abstract class AbstractPrettyLinter implements LinterInterface
     }
 
     /**
+     * @param int $indent
+     */
+    public function setIndent($indent)
+    {
+        $this->parser->setIndent($indent);
+    }
+
+
+    /**
      * @param array $keys
      */
     public function setTopKeys(array $keys)

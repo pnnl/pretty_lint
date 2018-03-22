@@ -22,14 +22,6 @@ class JsonPrettyLinter extends AbstractPrettyLinter
     private $detectKeyConflicts = false;
 
     /**
-     * @param int $indent
-     */
-    public function setIndent($indent)
-    {
-        $this->parser->setIndent($indent);
-    }
-
-    /**
      * @return bool
      */
     public function isInstalled()

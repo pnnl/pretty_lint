@@ -51,14 +51,6 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     }
 
     /**
-     * @param int $indent
-     */
-    public function setIndent($indent)
-    {
-        $this->parser->setIndent($indent);
-    }
-
-    /**
      * @param boolean $flag
      */
     public function setObjectSupport($flag)
