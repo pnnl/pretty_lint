@@ -79,6 +79,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
             // Sort the data and convert back to a string
             $this->sort($this->data);
             $this->sorted = $this->parser->dump($this->data);
+
             // Compare $content with $sorted - fail if different
             if ($this->content != $this->sorted) {
                 /*
