@@ -23,8 +23,8 @@ class PrettyLintError extends LintError
      * @param string $type
      * @param string $error
      * @param string $file
-     * @param int    $line
-     * @param null   $snippet
+     * @param int $line
+     * @param null $snippet
      */
     public function __construct(
         $type,
@@ -40,12 +40,12 @@ class PrettyLintError extends LintError
     /**
      * @param OrderException $exception
      *
-     * @return static
+     * @return self
      */
-    public static function fromOrderException(OrderException $exception)
+    public static function fromOrderException(OrderException $exception): self
     {
         return new static(
-            LintError::TYPE_ERROR,
+            parent::TYPE_ERROR,
             $exception->getMessage(),
             $exception->getParsedFile(),
             $exception->getParsedLine(),
@@ -53,7 +53,7 @@ class PrettyLintError extends LintError
         );
     }
 
-    public function getSnippet()
+    public function getSnippet(): string
     {
         return $this->snippet;
     }
@@ -61,7 +61,7 @@ class PrettyLintError extends LintError
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             '[%s] %s',

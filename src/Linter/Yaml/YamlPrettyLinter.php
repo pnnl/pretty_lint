@@ -37,7 +37,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public static function supportsFlags()
+    public static function supportsFlags(): bool
     {
         return YamlParser::supportsFlags();
     }
@@ -45,7 +45,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     /**
      * @return bool
      */
-    public function isInstalled()
+    public function isInstalled(): bool
     {
         return class_exists(Yaml::class);
     }
@@ -53,7 +53,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     /**
      * @param int $indent
      */
-    public function setIndent($indent)
+    public function setIndent($indent): void
     {
         $this->parser->setIndent($indent);
     }
@@ -61,7 +61,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     /**
      * @param boolean $flag
      */
-    public function setObjectSupport($flag)
+    public function setObjectSupport($flag): void
     {
         $this->parser->setObjectSupport($flag);
     }
@@ -69,7 +69,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     /**
      * @param bool $flag
      */
-    public function setParseConstants($flag)
+    public function setParseConstants($flag): void
     {
         // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
         $this->parser->setParseConstants($flag);
@@ -78,7 +78,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     /**
      * @param bool $flag
      */
-    public function setParseCustomTags($flag)
+    public function setParseCustomTags($flag): void
     {
         // Yaml::PARSE_CONSTANT is only available in Symfony Yaml >= 3.2
         $this->parser->setParseCustomTags($flag);
@@ -87,7 +87,7 @@ class YamlPrettyLinter extends AbstractPrettyLinter
     /**
      * @param boolean $flag
      */
-    public function setExceptionOnInvalidType($flag)
+    public function setExceptionOnInvalidType($flag): void
     {
         $this->parser->setExceptionOnInvalidType($flag);
     }

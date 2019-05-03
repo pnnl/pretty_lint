@@ -35,12 +35,14 @@ class YamlParser extends AbstractParser
     /**
      * {@inheritdoc}
      *
+     * @throws \ReflectionException
+     *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function parse($content)
+    public function parse($content): array
     {
         // Lint on Symfony Yaml < 3.1
-        if (!$this->supportsFlags()) {
+        if (!self::supportsFlags()) {
             return Yaml::parse(
                 $content,
                 $this->exceptionOnInvalidType,
@@ -48,7 +50,7 @@ class YamlParser extends AbstractParser
             );
         }
 
-        // Lint on Symfony Yaml <= 3.1
+        // Lint on Symfony Yaml >= 3.1
         $flags = 0;
         $flags |= $this->objectSupport ? Yaml::PARSE_OBJECT : 0;
         $flags |= $this->exceptionOnInvalidType ? Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE : 0;
@@ -62,7 +64,7 @@ class YamlParser extends AbstractParser
      *
      * @SuppressWarnings(PHPMD.StaticAccess)
      */
-    public function dump(array $data)
+    public function dump(array $data): string
     {
         // Cannot use INF since it returns a float and Yaml::dump requires an INT
         return Yaml::dump($data, PHP_INT_MAX, $this->indent);
@@ -77,7 +79,7 @@ class YamlParser extends AbstractParser
      * @return bool
      * @throws ReflectionException
      */
-    public static function supportsFlags()
+    public static function supportsFlags(): bool
     {
         $class = new ReflectionClass(Yaml::class);
         $method = $class->getMethod('parse');
@@ -89,7 +91,7 @@ class YamlParser extends AbstractParser
     /**
      * @param boolean $flag
      */
-    public function setObjectSupport($flag)
+    public function setObjectSupport($flag): void
     {
         $this->objectSupport = $flag;
     }
@@ -97,7 +99,7 @@ class YamlParser extends AbstractParser
     /**
      * @param boolean $flag
      */
-    public function setExceptionOnInvalidType($flag)
+    public function setExceptionOnInvalidType($flag): void
     {
         $this->exceptionOnInvalidType = $flag;
     }
@@ -105,7 +107,7 @@ class YamlParser extends AbstractParser
     /**
      * @param bool $flag
      */
-    public function setParseCustomTags($flag)
+    public function setParseCustomTags($flag): void
     {
         // Yaml::PARSE_CONSTANT is only available in Symfony Yaml >= 3.2
         $defined = defined('Symfony\Component\Yaml\Yaml::PARSE_CONSTANT');
@@ -115,7 +117,7 @@ class YamlParser extends AbstractParser
     /**
      * @param bool $flag
      */
-    public function setParseConstants($flag)
+    public function setParseConstants($flag): void
     {
         // Yaml::PARSE_CUSTOM_TAGS is only available in Symfony Yaml >= 3.3
         $defined = defined('Symfony\Component\Yaml\Yaml::PARSE_CUSTOM_TAGS');
