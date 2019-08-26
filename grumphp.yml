@@ -11,9 +11,9 @@ parameters:
     phplint: ~
     phpmd: ~
     phpparser:
-      kind: php5
+      kind: php7
     phpversion:
-      project: '5.6'
+      project: '7.1'
     prettyjson:
       ignore_patterns:
         - tests/fixtures
