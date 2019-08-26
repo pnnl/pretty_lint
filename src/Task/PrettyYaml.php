@@ -8,8 +8,10 @@
 
 namespace Pnnl\PrettyJSONYAML\Task;
 
+use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\YamlLint;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class PrettyYaml
@@ -24,7 +26,7 @@ class PrettyYaml extends YamlLint
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'prettyyaml';
     }
@@ -32,7 +34,7 @@ class PrettyYaml extends YamlLint
     /**
      * {@inheritdoc}
      */
-    public function getConfigurableOptions()
+    public function getConfigurableOptions(): OptionsResolver
     {
         $options = parent::getConfigurableOptions();
         $options->setDefaults(
@@ -53,7 +55,7 @@ class PrettyYaml extends YamlLint
     /**
      * {@inheritdoc}
      */
-    public function run(ContextInterface $context)
+    public function run(ContextInterface $context): TaskResultInterface
     {
         // Set custom config
         $config = $this->getConfiguration();

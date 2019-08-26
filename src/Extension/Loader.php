@@ -21,9 +21,9 @@ class Loader implements ExtensionInterface
      *
      * @throws \Exception
      */
-    public function load(ContainerBuilder $container)
+    public function load(ContainerBuilder $container): void
     {
-        $location = __DIR__ . "/../../resources/config";
+        $location = __DIR__ . '/../../resources/config';
         $locator = new FileLocator($location);
         $loader = new YamlFileLoader($container, $locator);
         $loader->load('parsers.yml');

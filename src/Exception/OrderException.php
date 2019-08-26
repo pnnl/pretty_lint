@@ -1,19 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will202
- * Date: 1/2/18
- * Time: 4:19 PM
- */
 
 namespace Pnnl\PrettyJSONYAML\Exception;
+
+use Exception;
 
 /**
  * Class OrderException
  *
  * @package Pnnl\PrettyJSONYAML\Exception
  */
-class OrderException extends \Exception
+class OrderException extends Exception
 {
 
     /**
@@ -39,18 +35,18 @@ class OrderException extends \Exception
     /**
      * OrderException constructor.
      *
-     * @param string          $message    The error message
-     * @param int             $parsedLine The line where the error occurred
-     * @param string|null     $snippet    The snippet of code near the problem
-     * @param string|null     $parsedFile The file name where the error occurred
-     * @param \Exception|null $previous   The previous exception
+     * @param string $message The error message
+     * @param int $parsedLine The line where the error occurred
+     * @param string|null $snippet The snippet of code near the problem
+     * @param string|null $parsedFile The file name where the error occurred
+     * @param \Exception|null $previous The previous exception
      */
     public function __construct(
         $message,
         $parsedLine = -1,
         $snippet = null,
         $parsedFile = null,
-        \Exception $previous = null
+        Exception $previous = null
     ) {
         $this->parsedFile = $parsedFile;
         $this->parsedLine = $parsedLine;
@@ -69,7 +65,7 @@ class OrderException extends \Exception
      *
      * @return string The filename
      */
-    public function getParsedFile()
+    public function getParsedFile(): string
     {
         return $this->parsedFile;
     }
@@ -79,7 +75,7 @@ class OrderException extends \Exception
      *
      * @param string $filename The filename
      */
-    public function setParsedFile($filename)
+    public function setParsedFile($filename): void
     {
         $this->parsedFile = $filename;
 
@@ -91,7 +87,7 @@ class OrderException extends \Exception
      *
      * @return int The file line
      */
-    public function getParsedLine()
+    public function getParsedLine(): int
     {
         return $this->parsedLine;
     }
@@ -101,7 +97,7 @@ class OrderException extends \Exception
      *
      * @param int $lineNumber the file line
      */
-    public function setParsedLine($lineNumber)
+    public function setParsedLine($lineNumber): void
     {
         $this->parsedLine = $lineNumber;
 
@@ -113,7 +109,7 @@ class OrderException extends \Exception
      *
      * @return string The code snippet
      */
-    public function getSnippet()
+    public function getSnippet(): string
     {
         return $this->snippet;
     }
@@ -123,7 +119,7 @@ class OrderException extends \Exception
      *
      * @param string $snippet The code snippet
      */
-    public function setSnippet($snippet)
+    public function setSnippet($snippet): void
     {
         $this->snippet = $snippet;
 
@@ -133,7 +129,7 @@ class OrderException extends \Exception
     /**
      * Update the exception's message that will be displayed to the user.
      */
-    private function updateRepr()
+    private function updateRepr(): void
     {
         $this->message = $this->rawMessage;
 

@@ -8,8 +8,10 @@
 
 namespace Pnnl\PrettyJSONYAML\Task;
 
+use GrumPHP\Runner\TaskResultInterface;
 use GrumPHP\Task\Context\ContextInterface;
 use GrumPHP\Task\JsonLint;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class PrettyJson
@@ -24,15 +26,15 @@ class PrettyJson extends JsonLint
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return "prettyjson";
+        return 'prettyjson';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getConfigurableOptions()
+    public function getConfigurableOptions(): OptionsResolver
     {
         $options = parent::getConfigurableOptions();
         $options->setDefaults(
@@ -53,7 +55,7 @@ class PrettyJson extends JsonLint
     /**
      * {@inheritdoc}
      */
-    public function run(ContextInterface $context)
+    public function run(ContextInterface $context): TaskResultInterface
     {
         // Set custom config
         $config = $this->getConfiguration();

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will202
- * Date: 3/16/18
- * Time: 7:44 AM
- */
 
 namespace Pnnl\PrettyJSONYAML\Parser;
 
@@ -33,12 +27,12 @@ abstract class AbstractParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    abstract public function parse($content);
+    abstract public function parse($content): array;
 
     /**
      * {@inheritdoc}
      */
-    public function parseFile(SplFileInfo $file)
+    public function parseFile(SplFileInfo $file): array
     {
         $content = $this->filesystem->readFromFileInfo($file);
         return $this->parse($content);
@@ -47,12 +41,12 @@ abstract class AbstractParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    abstract public function dump(array $data);
+    abstract public function dump(array $data): string;
 
     /**
      * {@inheritdoc}
      */
-    public function dumpFile(array $data, SplFileInfo $file)
+    public function dumpFile(array $data, SplFileInfo $file): void
     {
         $content = $this->dump($data);
         $this->filesystem->dumpFile($file->getPathname(), $content);
@@ -61,7 +55,7 @@ abstract class AbstractParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function setIndent($indent)
+    public function setIndent($indent): void
     {
         $this->indent = $indent;
     }

@@ -16,7 +16,7 @@ class JsonParser extends AbstractParser
 {
 
     /** @const string REGEX */
-    const REGEX = "/^ +/";
+    private const REGEX = '/^ +/';
 
     /** @var SJsonParser */
     private $jsonParser;
@@ -33,7 +33,7 @@ class JsonParser extends AbstractParser
     /**
      * {@inheritdoc}
      */
-    public function parse($content)
+    public function parse($content): array
     {
         return $this->jsonParser->parse($content, $this->calculateParseFlags());
     }
@@ -42,7 +42,7 @@ class JsonParser extends AbstractParser
      * {@inheritdoc}
      * @throws ParsingException
      */
-    public function dump(array $data)
+    public function dump(array $data): string
     {
         // Convert indentation
         $content = json_encode($data, $this->calculateDumpFlags());
@@ -53,17 +53,19 @@ class JsonParser extends AbstractParser
             $result = preg_match(self::REGEX, $line, $matches);
             if (!empty($result)) {
                 // Calculate proper indentation
-                $count = intval(((strlen($matches[0]) / 4) * $this->indent));
+                $count = (int) ((strlen($matches[0]) / 4) * $this->indent);
                 $replace = str_repeat(' ', $count);
                 // Replace indentation
                 $line = preg_replace(self::REGEX, $replace, $line);
 
                 // Throw exception if error detected in preg_replace
                 if (null === $line) {
-                    throw new ParsingException("Error occurred setting the proper indent on JSON data.");
+                    throw new ParsingException('Error occurred setting the proper indent on JSON data.');
                 }
             }
         }
+        unset($line);
+
         // Recombine lines into single properly indented JSON string
         $content = implode("\n", $split);
         return $content;
@@ -72,7 +74,7 @@ class JsonParser extends AbstractParser
     /**
      * @return int
      */
-    private function calculateDumpFlags()
+    private function calculateDumpFlags(): int
     {
         return JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES;
     }
@@ -80,7 +82,7 @@ class JsonParser extends AbstractParser
     /**
      * @return int
      */
-    private function calculateParseFlags()
+    private function calculateParseFlags(): int
     {
         return SJsonParser::DETECT_KEY_CONFLICTS | SJsonParser::PARSE_TO_ASSOC;
     }

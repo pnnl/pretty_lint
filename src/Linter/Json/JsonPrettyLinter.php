@@ -22,9 +22,17 @@ class JsonPrettyLinter extends AbstractPrettyLinter
     private $detectKeyConflicts = false;
 
     /**
+     * @param int $indent
+     */
+    public function setIndent($indent): void
+    {
+        $this->parser->setIndent($indent);
+    }
+
+    /**
      * @return bool
      */
-    public function isInstalled()
+    public function isInstalled(): bool
     {
         return class_exists(SJsonParser::class);
     }
@@ -32,19 +40,8 @@ class JsonPrettyLinter extends AbstractPrettyLinter
     /**
      * @param boolean $detectKeyConflicts
      */
-    public function setDetectKeyConflicts($detectKeyConflicts)
+    public function setDetectKeyConflicts($detectKeyConflicts): void
     {
         $this->detectKeyConflicts = $detectKeyConflicts;
-    }
-
-    /**
-     * @return int
-     */
-    private function calculateFlags()
-    {
-        $flags = 0;
-        $flags += $this->detectKeyConflicts ? SJsonParser::DETECT_KEY_CONFLICTS : 0;
-
-        return $flags;
     }
 }
