@@ -19,6 +19,8 @@ class Loader implements ExtensionInterface
     /**
      * {@inheritdoc}
      *
+     * @codeCoverageIgnore
+     *
      * @throws \Exception
      */
     public function load(ContainerBuilder $container): void
