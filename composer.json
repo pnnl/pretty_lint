@@ -27,7 +27,7 @@
     "php": "^7.1",
     "dflydev/dot-access-data": "^1.1||^2.0",
     "ext-json": "*",
-    "phpro/grumphp": "~0.15"
+    "phpro/grumphp": "~0.18"
   },
   "require-dev": {
     "jakub-onderka/php-parallel-lint": "^1.0",
