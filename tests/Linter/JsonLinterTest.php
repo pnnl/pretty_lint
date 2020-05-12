@@ -19,7 +19,7 @@ class JsonLinterTest extends AbstractLinterTest
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $filesystem = new Filesystem();
         $parser = new SJsonParser();

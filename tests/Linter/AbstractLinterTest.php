@@ -38,7 +38,7 @@ abstract class AbstractLinterTest extends TestCase
     /**
      * Test setup method
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $config = [
             'auto_fix' => false,
@@ -174,7 +174,5 @@ abstract class AbstractLinterTest extends TestCase
      */
     abstract public function dataForSortOrder();
 
-    public function testAutoFix()
-    {
-    }
+    // abstract public function testAutoFix();
 }

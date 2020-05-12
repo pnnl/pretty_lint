@@ -18,7 +18,7 @@ class YamlLinterTest extends AbstractLinterTest
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->parser = new YamlParser(new Filesystem());
         $this->linter = new YamlPrettyLinter($this->parser);

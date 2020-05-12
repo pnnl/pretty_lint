@@ -32,9 +32,11 @@ class PrettyJson extends JsonLint
     }
 
     /**
-     * {@inheritdoc}
+     * Get the available options for the plugin.
+     *
+     * @return \Symfony\Component\OptionsResolver\OptionsResolver
      */
-    public function getConfigurableOptions(): OptionsResolver
+    public static function getConfigurableOptions(): OptionsResolver
     {
         $options = parent::getConfigurableOptions();
         $options->setDefaults(
@@ -58,7 +60,7 @@ class PrettyJson extends JsonLint
     public function run(ContextInterface $context): TaskResultInterface
     {
         // Set custom config
-        $config = $this->getConfiguration();
+        $config = $this->getConfig();
         $this->linter->setAutoFix($config['auto_fix']);
         $this->linter->setIndent($config['indent']);
         $this->linter->setTopKeys($config['top_keys']);
