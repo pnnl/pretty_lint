@@ -1,17 +1,15 @@
 services:
-  task.prettyjson:
+  Pnnl\PrettyJSONYAML\Task\PrettyJson:
     arguments:
-      - '@config'
       - '@linter.jsonprettylinter'
     class: Pnnl\PrettyJSONYAML\Task\PrettyJson
     tags:
-      - config: prettyjson
-        name: grumphp.task
-  task.prettyyaml:
+      - name: grumphp.task
+        task: prettyjson
+  Pnnl\PrettyJSONYAML\Task\PrettyYaml:
     arguments:
-      - '@config'
       - '@linter.yamlprettylinter'
     class: Pnnl\PrettyJSONYAML\Task\PrettyYaml
     tags:
-      - config: prettyyaml
-        name: grumphp.task
+      - name: grumphp.task
+        task: prettyyaml

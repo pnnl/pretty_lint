@@ -20,13 +20,16 @@
   "config": {
     "sort-packages": true
   },
+  "conflict": {
+    "phpro/grumphp": "<0.18"
+  },
   "license": "MIT",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": "^7.1",
-    "dflydev/dot-access-data": "^1.1||^2.0",
     "ext-json": "*",
+    "dflydev/dot-access-data": "^1.1||^2.0",
     "phpro/grumphp": "~0.18"
   },
   "require-dev": {

@@ -58,7 +58,7 @@ class PrettyYaml extends YamlLint
     public function run(ContextInterface $context): TaskResultInterface
     {
         // Set custom config
-        $config = $this->getConfig();
+        $config = $this->getConfig()->getOptions();
         $this->linter->setAutoFix($config['auto_fix']);
         $this->linter->setIndent($config['indent']);
         $this->linter->setTopKeys($config['top_keys']);
