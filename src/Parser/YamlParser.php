@@ -23,8 +23,8 @@ class YamlParser extends AbstractParser
     /** @var bool $objectSupport - True if object support is enabled, false otherwise */
     private $objectSupport = false;
 
-    /** @var bool $exceptionOnInvalidType - True if an exception must be thrown on invalid types false otherwise */
-    private $exceptionOnInvalidType = false;
+    /** @var bool $invalidTypeExc - True if an exception must be thrown on invalid types false otherwise */
+    private $invalidTypeExc = false;
 
     /** @var bool $parseCustomTags - True if custom tags needs to be parsed */
     private $parseCustomTags = false;
@@ -43,17 +43,13 @@ class YamlParser extends AbstractParser
     {
         // Lint on Symfony Yaml < 3.1
         if (!self::supportsFlags()) {
-            return Yaml::parse(
-                $content,
-                $this->exceptionOnInvalidType,
-                $this->objectSupport
-            );
+            return Yaml::parse($content, $this->invalidTypeExc, $this->objectSupport);
         }
 
         // Lint on Symfony Yaml >= 3.1
         $flags = 0;
         $flags |= $this->objectSupport ? Yaml::PARSE_OBJECT : 0;
-        $flags |= $this->exceptionOnInvalidType ? Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE : 0;
+        $flags |= $this->invalidTypeExc ? Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE : 0;
         $flags |= $this->parseConstants ? Yaml::PARSE_CONSTANT : 0;
         $flags |= $this->parseCustomTags ? Yaml::PARSE_CUSTOM_TAGS : 0;
         return Yaml::parse($content, $flags);
@@ -101,7 +97,7 @@ class YamlParser extends AbstractParser
      */
     public function setExceptionOnInvalidType($flag): void
     {
-        $this->exceptionOnInvalidType = $flag;
+        $this->invalidTypeExc = $flag;
     }
 
     /**

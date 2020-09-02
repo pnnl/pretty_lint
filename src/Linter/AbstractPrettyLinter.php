@@ -18,6 +18,7 @@ use Pnnl\PrettyJSONYAML\Parser\ParserInterface;
 use Seld\JsonLint\ParsingException;
 use SplFileInfo;
 use Symfony\Component\Yaml\Exception\ParseException;
+use Exception;
 
 abstract class AbstractPrettyLinter implements LinterInterface
 {
@@ -28,8 +29,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
     /** @var string $content - The string content of the data file to be parsed */
     protected $content;
 
-    /** @var SplFileInfo $currentFile - The current file being sorted */
-    protected $currentFile;
+    /** @var string $fileName - Name of the current file. */
+    protected $fileName;
 
     /** @var array $data - The data array to be sorted */
     protected $data;
@@ -73,7 +74,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
 
         try {
             // Read the data from the file
-            $this->currentFile = $file;
+            $this->fileName = $file->getFilename();
             $this->data = $this->parser->parseFile($file);
             $this->content = $this->parser->dump($this->data);
             // Sort the data and convert back to a string
@@ -115,6 +116,8 @@ abstract class AbstractPrettyLinter implements LinterInterface
             $errors[] = YamlLintError::fromParseException($e);
         } catch (ParsingException $e) {
             $errors[] = JsonLintError::fromParsingException($file, $e);
+        } catch (Exception $e) {
+            $errors[] = PrettyLintError::fromOrderException($e);
         }
         return $errors;
     }
@@ -162,6 +165,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
      * @throws OrderException
      *
      * @SuppressWarnings(PHPMD.ElseExpression)
+     * @SuppressWarnings(PHPMD.UndefinedVariable)
      */
     protected function sort(array &$data): void
     {
@@ -227,7 +231,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
         $keys = $this->topKeys->has('global')
             ? $this->topKeys->get('global')
             : [];
-        $sanName = $this->sanitizeFileName($this->currentFile->getFilename());
+        $sanName = $this->sanitizeFileName($this->fileName);
         $name = "files.$sanName";
 
         if ($this->topKeys->has($name)) {
