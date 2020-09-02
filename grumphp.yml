@@ -1,8 +1,6 @@
-parameters:
+grumphp:
   extensions:
     - Pnnl\PrettyJSONYAML\Extension\Loader
-  bin_dir: vendor/bin
-  git_dir: .
   tasks:
     composer: ~
     file_size: ~
@@ -18,11 +16,11 @@ parameters:
       ignore_patterns:
         - tests/fixtures
       top_keys:
-        - name
         - name: composer.json
           keys:
             - description
             - php
+            - ext-json
     prettyyaml:
       ignore_patterns:
         - tests/config
