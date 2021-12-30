@@ -5,13 +5,11 @@ grumphp:
     composer: ~
     file_size: ~
     phpcs:
-      standard: PSR2
+      standard: PSR12
     phplint: ~
     phpmd: ~
     phpparser:
       kind: php7
-    phpversion:
-      project: '7.1'
     prettyjson:
       ignore_patterns:
         - tests/fixtures
@@ -27,4 +25,6 @@ grumphp:
         - tests/fixtures
       top_keys:
         - extensions
-    securitychecker: ~
+    securitychecker_enlightn:
+      lockfile: ./composer.lock
+      run_always: false

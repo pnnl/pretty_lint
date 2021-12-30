@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -15,7 +16,6 @@ use Seld\JsonLint\JsonParser as SJsonParser;
 
 class JsonLinterTest extends AbstractLinterTest
 {
-
     /**
      * {@inheritdoc}
      */

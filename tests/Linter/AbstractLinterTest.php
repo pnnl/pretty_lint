@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -19,12 +20,11 @@ use Symfony\Component\Yaml\Yaml;
 
 abstract class AbstractLinterTest extends TestCase
 {
+    /** @const string */
+    public const JSON = 'json';
 
     /** @const string */
-    const JSON = 'json';
-
-    /** @const string */
-    const YAML = 'yaml';
+    public const YAML = 'yaml';
 
     /** @var AbstractPrettyLinter $linter */
     protected $linter;

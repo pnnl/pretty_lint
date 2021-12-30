@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -22,7 +23,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PrettyJson extends JsonLint
 {
-
     /**
      * @return string
      */

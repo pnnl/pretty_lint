@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -15,7 +16,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Loader implements ExtensionInterface
 {
-
     /**
      * {@inheritdoc}
      *

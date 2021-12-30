@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -22,7 +23,6 @@ use Exception;
 
 abstract class AbstractPrettyLinter implements LinterInterface
 {
-
     /** @var bool */
     protected $autoFix = true;
 
@@ -217,7 +217,7 @@ abstract class AbstractPrettyLinter implements LinterInterface
         // Merge arrays to sort by order in $keys.
         $merged = array_merge($keys, $data);
         // Remove any keys not in $data and return.
-        return @array_intersect_assoc($merged, $data);
+        return array_intersect_assoc($merged, $data);
     }
 
     /**

@@ -11,7 +11,6 @@ use Exception;
  */
 class OrderException extends Exception
 {
-
     /**
      * @var string $parsedFile
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -20,7 +21,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlPrettyLinter extends AbstractPrettyLinter
 {
-
     /**
      * @var YamlParser
      */

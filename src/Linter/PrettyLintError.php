@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -13,7 +14,6 @@ use Pnnl\PrettyJSONYAML\Exception\OrderException;
 
 class PrettyLintError extends LintError
 {
-
     /** @var string */
     private $snippet;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -10,5 +11,4 @@ namespace Pnnl\Tests;
 
 class ExtensionTest
 {
-
 }

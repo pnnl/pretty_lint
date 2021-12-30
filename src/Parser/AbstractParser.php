@@ -12,7 +12,6 @@ use SplFileInfo;
  */
 abstract class AbstractParser implements ParserInterface
 {
-
     /** @var int $indent - number of spaces to indent each level */
     protected $indent;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -14,7 +15,6 @@ use Pnnl\PrettyJSONYAML\Parser\YamlParser;
 
 class YamlLinterTest extends AbstractLinterTest
 {
-
     /**
      * {@inheritdoc}
      */

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -19,7 +20,6 @@ use Symfony\Component\Yaml\Yaml;
  */
 class YamlParser extends AbstractParser
 {
-
     /** @var bool $objectSupport - True if object support is enabled, false otherwise */
     private $objectSupport = false;
 

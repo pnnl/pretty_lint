@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: will202
@@ -14,7 +15,6 @@ use Seld\JsonLint\JsonParser as SJsonParser;
 
 class JsonPrettyLinter extends AbstractPrettyLinter
 {
-
     /** @var JsonParser */
     protected $parser;
 
