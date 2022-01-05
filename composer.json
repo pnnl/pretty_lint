@@ -2,6 +2,10 @@
   "description": "Pretty Lint JSON and YAML files",
   "authors": [
     {
+      "name": "Drupal Team",
+      "email": "drupal@pnnl.gov"
+    },
+    {
       "name": "Thom Williams",
       "email": "thomscode@gmail.com"
     }
